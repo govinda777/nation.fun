@@ -54,6 +54,3 @@ smee --url https://smee.io/abc123 --target http://localhost:3000/api/webhook
 - Redirecionamento via Smee para seu agente local.
 - Seu agente processa o evento na API criada.
 
-Quer que eu gere também um exemplo de código completo para o seu agente?
-
-Fontes
