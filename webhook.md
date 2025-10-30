@@ -1,6 +1,4 @@
-Vou montar um tutorial passo a passo para configurar um webhook que envia eventos do GitHub para um agente na plataforma Nation, usando uma ferramenta como o Smee para facilitar o desenvolvimento local. Essa abordagem garante simplicidade e agilidade.
 
-***
 
 ## Tutorial Simplificado: Configurando Webhook no Agente Nation usando GitHub e Smee
 
