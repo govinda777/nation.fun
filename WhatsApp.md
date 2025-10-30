@@ -1,91 +1,97 @@
-
-
-## Tutorial para Integrar Nation com WhatsApp e Responder Mensagens
-
-### 1. Crie e configure seu agente Nation
-
-- Prepare seu agente Nation em Next.js ou outro framework, com um endpoint API para receber requisições webhook, exemplo: `/api/whatsapp-webhook`.
-- Esse endpoint receberá as mensagens do WhatsApp enviadas pela API que você usar.
-
-```javascript
-// pages/api/whatsapp-webhook.js
-export default async function handler(req, res) {
-  const body = req.body;
-  console.log('Mensagem recebida do WhatsApp:', body);
-
-  // Aqui você pode implementar a lógica para responder, por exemplo:
-  const replyMessage = 'Olá! Recebi sua mensagem e vou te ajudar!';
-
-  // Retorne status 200 para confirmar recebimento
-  res.status(200).json({ message: 'Evento recebido' });
-}
-```
-
-### 2. Contrate e configure uma API de WhatsApp (exemplo: Z-API)
-
-- Acesse o site da Z-API (https://z-api.io/).
-- Cadastre-se e configure seu número de WhatsApp na plataforma.
-- Obtenha seu **Token** de acesso para uso nas requisições.
-
-### 3. Configure o webhook na Z-API para apontar ao seu agente Nation
-
-- Na dashboard da Z-API, configure o endereço do webhook apontando para seu endpoint do agente, por exemplo:
-  `https://meu-agente-nation.vercel.app/api/whatsapp-webhook` (ou URL local para desenvolvimento via tunnel como ngrok).
-
-### 4. Implemente o envio de resposta automática no agente Nation usando a API
-
-- Na função que recebe a mensagem (exemplo no passo 1), envie via HTTP POST uma mensagem de volta usando a API da Z-API.
-
-Exemplo básico usando fetch (Node.js):
-
-```javascript
-const sendReply = async (phone, message) => {
-  const token = 'SEU_TOKEN_DA_ZAPI';
-  const url = `https://api.z-api.io/${token}/send-message`;
-
-  const body = {
-    phone,
-    message
-  };
-
-  await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
-  });
-};
-```
-
-- Chame `sendReply` passando o número do remetente e a mensagem de resposta para responder automaticamente.
-
-### 5. Teste e ajuste
-
-- Envie uma mensagem para o número configurado na Z-API.
-- Verifique se seu agente recebe a mensagem no webhook.
-- Confira se a resposta automática é enviada de volta ao WhatsApp do usuário.
+Excelente foco — esse tutorial cobre desde a autenticação segura até o fluxo final dentro da plataforma Nation, garantindo o uso direto da API oficial do WhatsApp Business.  
+O guia é ideal tanto para desenvolvedores que desejam manter total controle da integração quanto para equipes que precisam cumprir as políticas da Meta.  
 
 ***
 
-## Resumo
+## Configurar o Agente Nation com WhatsApp Business API
 
-| Passo                        | Descrição                                            |
-|-----------------------------|------------------------------------------------------|
-| 1. Criar endpoint API        | Recebem mensagens do WhatsApp via webhook           |
-| 2. Criar conta na Z-API      | Configurar número e obter token para API             |
-| 3. Configurar webhook Z-API  | Apontar webhook da Z-API para agente Nation           |
-| 4. Implementar envio de resposta | Enviar mensagem via API a partir do agente       |
-| 5. Testar                    | Enviar mensagens e validar respostas automáticas     |
+### 1. Pré-requisitos
 
-Quer o código completo para o agente Nation pronto para essa integração? Posso montar para você.
+- Conta **Meta Business Manager** verificada.  
+- Número de telefone aprovado para uso com **WhatsApp Business API**.  
+- Criação de um **App** no [Meta for Developers](https://developers.facebook.com/).  
+- Acesso à plataforma **Nation** com permissão para configurar um agente.
 
-Fontes
-[1] Como integrar Agentes IA ao WhatsApp - A maneira mais fácil https://www.youtube.com/watch?v=P1t28pzbO08
-[2] Como integrar WhatsApp, e-mail e telefone em uma única plataforma https://primetechsolution.com.br/en/blog/integrar-whatsapp-email-telefone-uma-plataforma/
-[3] 24 Melhores ferramentas de automação do WhatsApp para usar em ... https://www.kommo.com/br/blog/ferramentas-de-automacao-no-whatsapp/
-[4] Como integrar n8n com WhatsApp passo a passo - Hora de Codar https://horadecodar.com.br/integrar-n8n-whatsapp-passo-passo/
-[5] Como integrar n8n com WhatsApp Business API - Hora de Codar https://horadecodar.com.br/integrar-n8n-whatsapp-business-api/
-[6] Envio de Mensagens Automáticas no WhatsApp com Make e Z-API https://www.youtube.com/watch?v=4A2BmsHaFi8
-[7] API Oficial do WhatsApp: O Guia Definitivo para Empresas (e Por ... https://aspa.chat/blog/api-oficial-whatsapp-guia-completo
-[8] Como utilizar o WhatsApp Business Cloud API na plataforma n8n https://www.youtube.com/watch?v=nWHWzj1_c0Q
-[9] Como integrar o WhatsApp com outros sistemas para automação total https://jornaldebrasilia.com.br/inovacao/como-integrar-o-whatsapp-com-outros-sistemas-para-automacao-total/
-[10] Integração - Whatsapp Mensageiros - Wiki HubSoft https://wiki.hubsoft.com.br/pt-br/modulos/configuracao/integracao/sms/whatsapp_mensageiros
+### 2. Obter credenciais oficiais da Meta
+
+No **Meta Developer Dashboard**:  
+1. Acesse *Meus Apps* → selecione ou crie um novo app.  
+2. Ative o **produtor do WhatsApp** no painel.  
+3. Localize e copie com segurança:
+   - `App ID`
+   - `App Secret`
+   - `Access Token` (token de longa duração)
+   - `Phone Number ID`
+   - `Business Account ID`  
+
+#### Dica de segurança
+- **Nunca** salve credenciais em arquivos públicos do Git.  
+- Use variáveis de ambiente (`.env`) no servidor ou no pipeline do Nation.  
+- Configure permissões de leitura restritas (ex.: `chmod 600 .env` no Linux).  
+- Evite inserir tokens diretamente em códigos ou logs.
+
+### 3. Configurar autenticação no agente Nation
+
+No painel do **Nation**:
+1. Vá até *Integrações > APIs externas > WhatsApp Business*.  
+2. Insira variáveis com valores seguros de ambiente:
+   ```bash
+   WHATSAPP_APP_ID=your_app_id
+   WHATSAPP_ACCESS_TOKEN=your_long_lived_token
+   WHATSAPP_BUSINESS_ID=your_business_id
+   WHATSAPP_PHONE_ID=your_phone_number_id
+   ```
+3. Valide as permissões via requisição de teste:
+   ```bash
+   curl -X GET "https://graph.facebook.com/v21.0/${WHATSAPP_PHONE_ID}/?access_token=${WHATSAPP_ACCESS_TOKEN}"
+   ```
+   A resposta JSON deve conter detalhes do número cadastrado e confirmar a autenticação.
+
+### 4. Configurar o fluxo básico de mensagens
+
+#### Envio de mensagem (Nation → WhatsApp)
+```bash
+curl -X POST "https://graph.facebook.com/v21.0/${WHATSAPP_PHONE_ID}/messages" \
+-H "Authorization: Bearer ${WHATSAPP_ACCESS_TOKEN}" \
+-H "Content-Type: application/json" \
+-d '{
+  "messaging_product": "whatsapp",
+  "to": "55XXXXXXXXXX",
+  "type": "text",
+  "text": { "body": "Olá, este é um teste via agente Nation!" }
+}'
+```
+
+#### Recepção de mensagem (Webhook → Nation)
+1. No Meta Developer Dashboard, vá até *Webhooks* → *WhatsApp Business Account*.  
+2. Configure a URL pública do Nation:  
+   ```
+   https://seuagente.nation.io/api/webhook/whatsapp
+   ```
+3. Defina o **Verify Token** (mesmo valor no Nation e no Meta).  
+4. Selecione os eventos: `messages`, `message_status`, `template_status`.  
+
+O Nation agora processará automaticamente entradas e saídas de mensagens via o agente configurado.
+
+### 5. Boas práticas de segurança e conformidade
+
+- Utilize HTTPS com certificado válido no servidor do Nation.  
+- Atualize tokens regularmente (tokens de longa duração expiram após ~60 dias).  
+- Monitore o uso com logs seguros e mascaramento de dados pessoais.  
+- Respeite a política da Meta: não envie mensagens sem opt-in do usuário.  
+- Use webhooks para auditoria e detecção de erros antes do deploy final.  
+- Teste apenas em **ambientes sandbox** (Meta Sandbox Numbers) antes de enviar ao público.
+
+### 6. Testes seguros antes do deploy final
+
+1. Crie um ambiente chamado `staging` no Nation.  
+2. Configure variáveis `.env.staging` separadas das de produção.  
+3. Use `curl` ou testers integrados do Meta para simular mensagens.  
+4. Realize testes com limite de TPS (Transactions per second) baixo.  
+5. Monitore os retornos no console do Nation e ajuste o parsing JSON conforme necessário.
+
+> **Dica extra:** automatize seus testes com frameworks como Jest ou Mocha integrados ao fluxo BDD do Nation para validar endpoints antes do deploy.
+
+***
+
+Deseja que eu adicione também exemplos práticos em TypeScript usando a SDK do Nation para enviar e receber mensagens via WhatsApp?
