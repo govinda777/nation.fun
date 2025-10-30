@@ -1,7 +1,4 @@
-Excelente foco — esse tutorial cobre desde a autenticação segura até o fluxo final dentro da plataforma Nation, garantindo o uso direto da API oficial do WhatsApp Business.  
-O guia é ideal tanto para desenvolvedores que desejam manter total controle da integração quanto para equipes que precisam cumprir as políticas da Meta.  
 
-***
 
 ## Configurar o Agente Nation com WhatsApp Business API
 
