@@ -89,6 +89,3 @@ O Nation agora processará automaticamente entradas e saídas de mensagens via o
 
 > **Dica extra:** automatize seus testes com frameworks como Jest ou Mocha integrados ao fluxo BDD do Nation para validar endpoints antes do deploy.
 
-***
-
-Deseja que eu adicione também exemplos práticos em TypeScript usando a SDK do Nation para enviar e receber mensagens via WhatsApp?
