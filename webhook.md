@@ -1,32 +1,43 @@
 
+## Tutorial Completo: Criando um Webhook GitHub que Interage com o Agente Nation usando Smee
 
-## Tutorial Simplificado: Configurando Webhook no Agente Nation usando GitHub e Smee
+### Objetivo
+Configurar seu repositório GitHub para disparar eventos de commit (push) e fazer seu agente Next.js reagir automaticamente a esses eventos, com a ajuda do Smee para encaminhar os webhooks para seu ambiente local.
 
-### 1. Preparar o projeto do agente Nation
-- Crie uma aplicação Next.js (ou similar) para seu agente.
-- No projeto, implemente uma rota API que receberá o webhook (exemplo: `pages/api/webhook.js`).
+***
+
+### 1. Preparar seu projeto do Agente Next.js
+- Crie uma aplicação Next.js (ou similar).
+- Implemente uma rota API para receber os webhooks, por exemplo, `pages/api/webhook.js`.
 
 ```javascript
 // pages/api/webhook.js
 export default async function handler(req, res) {
-  // Valide o segredo aqui (opcional)
-  // Processar o evento recebido
-  console.log('Evento recebido:', req.body);
-  res.status(200).end();
+  const eventType = req.headers['x-github-event'];
+  const payload = req.body;
+
+  // Exemplo: reagir a evento de push
+  if (eventType === 'push') {
+    console.log('Push recebido:', payload.head_commit.message);
+    // Aqui você pode disparar ações adicionais, como rodar testes, enviar notificações, etc.
+  }
+
+  res.status(200).json({ message: 'Evento processado' });
 }
 ```
 
-### 2. Criar uma URL de webhook com Smee
-- Acesse [https://smee.io](https://smee.io).
-- Clique em "Start a new channel" e copie a URL gerada, por exemplo: `https://smee.io/abc123`.
+### 2. Criar uma URL pública de webhook com Smee
+- Acesse [https://smee.io](https://smee.io)
+- Clique em **Start a new channel**.
+- Copie a URL gerada, por exemplo: `https://smee.io/abc123`.
 
-### 3. Configurar o webhook no GitHub
-- Vá até **Settings > Webhooks** do repositório.
+### 3. Configurar o Webhook no GitHub
+- Vá até **Settings > Webhooks** do seu repositório GitHub.
 - Clique em **Add webhook**.
-- Cole a URL do Smee na caixa "Payload URL".
-- Selecione o formato **JSON**.
-- Escolha os eventos que quer receber, como "Pull requests" ou "Push".
-- (Opcional) Configure um segredo para validação.
+- Cole a URL do Smee no campo **Payload URL**.
+- Selecione **application/json** para o formato.
+- Marque o evento **Push** (ou outros conforme sua necessidade).
+- Opcionalmente, configure um **segredo** para validação.
 - Clique em **Add webhook**.
 
 ### 4. Rodar o cliente Smee localmente
@@ -36,21 +47,29 @@ export default async function handler(req, res) {
 npm install -g smee-client
 ```
 
-- Execute o comando para redirecionar eventos para seu servidor local:
+- Execute o comando para redirecionar os eventos para seu servidor local:
 
 ```bash
 smee --url https://smee.io/abc123 --target http://localhost:3000/api/webhook
 ```
 
+> **Importante:** Certifique-se de que seu servidor local (Next.js) está rodando na porta 3000.
+
 ### 5. Testar a integração
-- Faça uma ação no GitHub (ex: abrir um pull request).
-- Verifique se seu agente recebendo o evento no console (ou processando de acordo com seu código).
+- Faça um **push** no seu repositório GitHub.
+- Você deverá ver, no console do seu agente, a mensagem do commit, indicando que recebeu o evento.
 
 ***
 
 ## Resumo
-- Você gera uma URL pública com o Smee.
-- Configura o webhook no GitHub apontando para essa URL.
-- Redirecionamento via Smee para seu agente local.
-- Seu agente processa o evento na API criada.
+- Crie uma rota API no seu agente para receber webhooks.
+- Gerar uma URL pública com Smee.
+- Configurar o Webhook no GitHub apontando para essa URL.
+- Usar o Smee para encaminhar os eventos para seu ambiente de desenvolvimento local.
+- Seu agente reage ao evento de push e executa as ações desejadas.
 
+***
+
+Assim, você tem um fluxo automatizado completo que permite que seu agente do Nation interaja e reaja a eventos específicos do seu repositório GitHub, como commits, pull requests ou outros, facilitando automações, testes e integrações contínuas.
+
+Se desejar, posso também ajudar a criar scripts mais avançados ou exemplos de reações específicas a diferentes eventos.
