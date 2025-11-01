@@ -26,11 +26,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Create .env.local file
-        run: echo "TOKEN_NATION=${{ secrets.TOKEN_NATION }}" > .env.local
-
       - name: Build the project
         run: npm run build
 
       - name: Run BDD tests
         run: npm run test:bdd
+        env:
+          # The tests might require environment variables, even if they are mocked.
+          # We can provide dummy values here as the actual secret is not needed for the tests to run.
+          TOKEN_NATION: ${{ secrets.TOKEN_NATION_DUMMY }}

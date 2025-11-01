@@ -20,12 +20,14 @@ function sendMessage() {
     addMessage(message, 'user');
     messageInput.value = '';
 
-    fetch('/api/chat', {
+    fetch('https://open.service.crestal.network/v1/chat/completions', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${window.TOKEN_NATION}`
         },
         body: JSON.stringify({
+            model: 'intentkit-001',
             messages: [{
                 role: 'user',
                 content: message
