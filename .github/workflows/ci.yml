@@ -1,0 +1,37 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: Run Build and Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Run BDD tests
+        run: npm run test:bdd
+        env:
+          # The tests might require environment variables, even if they are mocked.
+          # We can provide dummy values here as the actual secret is not needed for the tests to run.
+          TOKEN_NATION: ${{ secrets.TOKEN_NATION_DUMMY }}
