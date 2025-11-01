@@ -1,6 +1,6 @@
 // pages/api/whatsapp.js
-import { validateWhatsAppWebhook } from 'services/whatsapp/webhook-handler';
-import { processWhatsAppMessage } from 'services/whatsapp/message-processor';
+import webhookHandler from 'services/whatsapp/webhook-handler.js';
+import { processWhatsAppMessage } from 'services/whatsapp/message-processor.js';
 
 /**
  * @swagger
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
   } else if (req.method === 'POST') {
     try {
       // Validar assinatura do webhook
-      if (!validateWhatsAppWebhook(req)) {
+      if (!webhookHandler.validateWhatsAppWebhook(req)) {
         return res.status(401).send('Unauthorized');
       }
 
