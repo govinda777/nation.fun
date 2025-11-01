@@ -31,19 +31,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm install
-      - name: Run BDD tests
-        run: npm run test:bdd
-        env:
-          TOKEN_NATION: ${{ secrets.TOKEN_NATION }}
-          NARION_API_URL: https://open.service.crestal.network/v1/chat/completions
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Create config.js
+        run: echo "window.TOKEN_NATION = '${{ secrets.TOKEN_NATION }}';" > config.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
