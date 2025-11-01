@@ -2,6 +2,7 @@
   "name": "nation-fun",
   "version": "1.0.0",
   "description": "A project to connect and create agents.",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
