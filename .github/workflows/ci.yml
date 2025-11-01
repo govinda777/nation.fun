@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Create .env.local file
-        run: echo "TOKEN_NATION=${{ secrets.TOKEN_NATION_DUMMY }}" > .env.local
+        run: echo "TOKEN_NATION=${{ secrets.TOKEN_NATION }}" > .env.local
 
       - name: Build the project
         run: npm run build
