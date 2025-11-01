@@ -8,7 +8,7 @@
 
 ## 📋 Sobre o Projeto
 
-**nation.fun** é uma plataforma inovadora e bem estruturada que funciona como um projeto modelo para conectar com agentes inteligentes e criar novos agentes de forma prática e eficiente. Este projeto foi desenvolvido com as melhores práticas de engenharia de software, incluindo testes unitários, BDD (Behavior-Driven Development), integração com Next.js e hospedagem via GitHub Pages.
+**nation.fun** é uma plataforma inovadora e bem estruturada que funciona como um projeto modelo para conectar com agentes inteligentes e criar novos agentes de forma prática e eficiente. Este projeto foi desenvolvido com as melhores práticas de engenharia de software, incluindo testes unitários, BDD (Behavior-Driven Development), e integração com Next.js.
 
 Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de agentes, criar integrações escaláveis e manter um código limpo e bem documentado.
 
@@ -18,7 +18,7 @@ Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de a
 - **Criação de Novos Agentes**: Interface intuitiva para criar e gerenciar agentes
 - **Estrutura Limpa**: Projeto bem organizado e fácil de estender
 - **Testes Automatizados**: Cobertura com testes unitários e BDD
-- **Deploy Automático**: Hospedagem via GitHub Pages
+- **Deploy Otimizado**: Configurado para deploy em plataformas como a Vercel
 - **Documentação Completa**: Código autoexplicativo com boas práticas
 
 ## 🛠️ Tecnologias Utilizadas
@@ -31,7 +31,6 @@ Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de a
 | **CSS** | Estilos e design responsivo |
 | **HTML** | Marcação semântica |
 | **Git** | Controle de versão |
-| **GitHub Pages** | Hospedagem estática |
 
 ## 🚀 Como Começar
 
@@ -100,17 +99,19 @@ npm run test:coverage
 
 ## 🚢 Deploy
 
-O projeto está configurado para deploy automático via GitHub Pages:
+Este projeto é otimizado para deploy em plataformas de hospedagem de aplicações Next.js, como a Vercel.
 
-```bash
-# Build para produção
-npm run build
+### Configuração na Vercel
 
-# Deploy
-npm run deploy
-```
+1.  **Crie uma conta** na [Vercel](https://vercel.com) e conecte sua conta do GitHub.
+2.  **Importe o repositório** do `nation.fun`.
+3.  A Vercel irá detectar automaticamente que é um projeto Next.js.
+4.  **Configure as Variáveis de Ambiente**:
+    - No painel do projeto na Vercel, vá para **Settings > Environment Variables**.
+    - Adicione a seguinte variável:
+      - `TOKEN_NATION`: O token secreto da API da Crestal.
 
-Acesse seu projeto em: [https://govinda777.github.io/nation.fun/](https://govinda777.github.io/nation.fun/)
+5.  **Faça o deploy**: A Vercel fará o build e o deploy do projeto automaticamente. Qualquer novo push para a branch `main` irá acionar um novo deploy.
 
 ## 📖 Documentação
 
