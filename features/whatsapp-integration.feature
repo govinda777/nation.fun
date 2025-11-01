@@ -2,7 +2,7 @@
 Feature: WhatsApp Integration
   As a user,
   I want to send and receive messages via WhatsApp,
-  So that I can interact with the NARION agent.
+  So that I can interact with the NATION agent.
 
   Scenario: Receiving and processing a message
     Given a webhook from WhatsApp is configured

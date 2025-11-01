@@ -24,7 +24,7 @@ function sendMessage() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.NARION_TOKEN}`
+            'Authorization': `Bearer ${window.TOKEN_NATION}`
         },
         body: JSON.stringify({
             model: 'intentkit-001',

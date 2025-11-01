@@ -31,7 +31,7 @@ go.work.sum
 # .idea/
 # .vscode/
 
-# NARION config file
+# NATION config file
 config.js
 
 # Node.js

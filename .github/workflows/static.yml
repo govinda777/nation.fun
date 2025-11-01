@@ -34,7 +34,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Create config.js
-        run: echo "window.NARION_TOKEN = '${{ secrets.TOKEN_NATION }}';" > config.js
+        run: echo "window.TOKEN_NATION = '${{ secrets.TOKEN_NATION }}';" > config.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
