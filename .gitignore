@@ -8,6 +8,9 @@
 *.so
 *.dylib
 
+# Next
+.next/
+
 # Test binary, built with `go test -c`
 *.test
 
