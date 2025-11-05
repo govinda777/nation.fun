@@ -4,8 +4,8 @@ import sinon from 'sinon';
 import nock from 'nock';
 
 // Mock dependencies
-import { processWhatsAppMessage } from '../../services/whatsapp/message-processor.js';
-import webhookHandler from '../../services/whatsapp/webhook-handler.js';
+import { processWhatsAppMessage } from '../services/message-processor.js';
+import webhookHandler from '../services/webhook-handler.js';
 
 let from, messageBody;
 let mockWhatsAppClient, mockAgentOrchestrator;

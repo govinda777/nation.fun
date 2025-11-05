@@ -1,6 +1,6 @@
 // services/whatsapp/message-processor.js
 import whatsAppClient from './client.js';
-import agentOrchestrator from '../agents/agent-orchestrator.js';
+import agentOrchestrator from '../../chat/services/agent-orchestrator.js';
 
 /**
  * Processes an incoming WhatsApp message from the webhook.
