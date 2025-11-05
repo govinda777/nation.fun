@@ -39,3 +39,4 @@ node_modules
 npm-debug.log
 .npm
 .next/
+start.log

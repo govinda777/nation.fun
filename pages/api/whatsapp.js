@@ -1,6 +1,6 @@
 // pages/api/whatsapp.js
-import webhookHandler from 'services/whatsapp/webhook-handler.js';
-import { processWhatsAppMessage } from 'services/whatsapp/message-processor.js';
+import webhookHandler from './webhook-handler.js';
+import { processWhatsAppMessage } from './message-processor.js';
 
 /**
  * @swagger

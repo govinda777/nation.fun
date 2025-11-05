@@ -8,7 +8,7 @@
 
 ## 📋 Sobre o Projeto
 
-**nation.fun** é uma plataforma inovadora e bem estruturada que funciona como um projeto modelo para conectar com agentes inteligentes e criar novos agentes de forma prática e eficiente. Este projeto foi desenvolvido com as melhores práticas de engenharia de software, incluindo testes unitários, BDD (Behavior-Driven Development), integração com Next.js e hospedagem via GitHub Pages.
+**nation.fun** é uma plataforma inovadora e bem estruturada que funciona como um projeto modelo para conectar com agentes inteligentes e criar novos agentes de forma prática e eficiente. Este projeto foi desenvolvido com as melhores práticas de engenharia de software, incluindo testes unitários, BDD (Behavior-Driven Development), integração com Next.js e hospedagem via Vercel.
 
 Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de agentes, criar integrações escaláveis e manter um código limpo e bem documentado.
 
@@ -18,7 +18,7 @@ Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de a
 - **Criação de Novos Agentes**: Interface intuitiva para criar e gerenciar agentes
 - **Estrutura Limpa**: Projeto bem organizado e fácil de estender
 - **Testes Automatizados**: Cobertura com testes unitários e BDD
-- **Deploy Automático**: Hospedagem via GitHub Pages
+- **Deploy Automático**: Hospedagem via Vercel
 - **Documentação Completa**: Código autoexplicativo com boas práticas
 
 ## 🛠️ Tecnologias Utilizadas
@@ -31,7 +31,7 @@ Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de a
 | **CSS** | Estilos e design responsivo |
 | **HTML** | Marcação semântica |
 | **Git** | Controle de versão |
-| **GitHub Pages** | Hospedagem estática |
+| **Vercel** | Hospedagem |
 
 ## 🚀 Como Começar
 
@@ -73,11 +73,8 @@ Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de a
 ```
 nation.fun/
 ├── public/              # Arquivos estáticos
-├── components/          # Componentes React reutilizáveis
-├── pages/              # Páginas da aplicação
-├── styles/             # Arquivos de estilo CSS
+├── pages/              # Páginas e rotas de API
 ├── features/           # Especificações BDD (.feature)
-├── tests/              # Testes unitários
 ├── next.config.js      # Configuração Next.js
 ├── package.json        # Dependências do projeto
 └── README.md           # Este arquivo
@@ -98,19 +95,26 @@ npm run test:bdd
 npm run test:coverage
 ```
 
-## 🚢 Deploy
+## 🚢 Publicando na Vercel
 
-O projeto está configurado para deploy automático via GitHub Pages:
+Para publicar sua aplicação na Vercel, siga os passos abaixo:
 
-```bash
-# Build para produção
-npm run build
+1.  **Crie uma conta na Vercel:**
+    *   Acesse [vercel.com](https://vercel.com) e crie uma conta gratuitamente. Você pode se registrar usando sua conta do GitHub, GitLab ou Bitbucket.
 
-# Deploy
-npm run deploy
-```
+2.  **Importe o projeto do GitHub:**
+    *   No painel da Vercel, clique em "Add New..." e selecione "Project".
+    *   Conecte sua conta do GitHub e selecione o repositório `nation.fun`.
 
-Acesse seu projeto em: [https://govinda777.github.io/nation.fun/](https://govinda777.github.io/nation.fun/)
+3.  **Configure o projeto:**
+    *   A Vercel detectará automaticamente que este é um projeto Next.js e aplicará as configurações padrão.
+    *   **Importante:** Adicione a variável de ambiente `TOKEN_NATION` se a sua aplicação a utiliza para funcionalidades de chat. Vá para a seção "Environment Variables" e adicione a chave e o valor correspondente.
+
+4.  **Faça o deploy:**
+    *   Clique no botão "Deploy". A Vercel irá construir e publicar sua aplicação.
+    *   Após o deploy, você receberá um link para acessar sua aplicação ao vivo.
+
+Qualquer push para a branch `main` irá acionar um novo deploy automaticamente.
 
 ## 📖 Documentação
 
