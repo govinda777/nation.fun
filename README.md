@@ -12,6 +12,20 @@
 
 Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de agentes, criar integrações escaláveis e manter um código limpo e bem documentado.
 
+## Objetivo
+
+Ser uma plataforma que ajude o empreendedor a atender e automatizar o processo de atendimento aos clientes.
+
+## Jornada
+
+- 1 - Login with Privy
+- 2 - Add founds in walley privy
+- 3 - Buy Nation pass
+- 4 - Buy NATO
+- 5 - Add CAP in agente
+- 6 - Add agent by template (atendente : clinica / empresa endenharia / ecommerce )
+- 7 - Channel [whatsapp / telegram] | Integration [calendar / ecommece ]
+
 ## ✨ Características Principais
 
 - **Conexão com Agentes**: Conecte-se facilmente com agentes existentes
