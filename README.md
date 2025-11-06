@@ -26,6 +26,37 @@ Ser uma plataforma que ajude o empreendedor a atender e automatizar o processo d
 - 6 - Add agent by template (atendente : clinica / empresa endenharia / ecommerce )
 - 7 - Channel [whatsapp / telegram] | Integration [calendar / ecommece ]
 
+## Especificação do Projeto nation.fun
+
+### Objetivo Principal
+Fomentar a venda da NFT Nation Pass e do token $NATION, criando uma plataforma que permita o onboarding fácil de usuários para a criação e uso de agentes automatizados, facilitando o atendimento aos seus clientes de forma simples e eficiente.
+
+### Descrição
+O projeto visa permitir que, em poucos passos, qualquer usuário possa criar seu próprio agente automatizado, capaz de atender clientes em diferentes nichos e canais, automatizando processos de atendimento para empreendedores e empresas.
+
+### Funcionalidades Principais
+1. **Login com Privy:** Autenticação segura e prática via Privy.
+2. **Adicionar fundos na carteira Privy:** Usuários adicionam fundos para operações dentro da plataforma.
+3. **Comprar Nation Pass (NFT):** Venda da NFT que dá acesso a funcionalidades exclusivas.
+4. **Comprar token $NATION:** Facilita transações e interações dentro do ecossistema.
+5. **Adicionar CAP no agente:** Personalização e configuração do agente automatizado.
+6. **Adicionar agente por template:** Criação rápida com modelos prontos para diferentes perfis:
+    - Atendente para clínica
+    - Empresa de engenharia
+    - E-commerce
+7. **Canais e integrações:** Suporte para múltiplos canais e integrações, como:
+    - Canais: WhatsApp, Telegram
+    - Integrações: Calendário, E-commerce
+
+### Público-Alvo
+Empreendedores e pequenos negócios que buscam automatizar e melhorar o atendimento ao cliente, utilizando agentes automatizados sem complexidade técnica.
+
+### Benefícios Esperados
+- Processo simplificado de onboarding para usuários.
+- Automatização eficiente de processos de atendimento.
+- Expansão do uso das NFTs e tokens no ecossistema Nation.
+- Plataforma escalável e integrável com vários canais e ferramentas externas.
+
 ## ✨ Características Principais
 
 - **Conexão com Agentes**: Conecte-se facilmente com agentes existentes
