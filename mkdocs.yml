@@ -1,6 +1,7 @@
 site_name: nation.fun Docs
 site_url: https://govinda777.github.io/nation.fun/
 repo_url: https://github.com/govinda777/nation.fun
+docs_dir: docs
 
 theme:
   name: material
