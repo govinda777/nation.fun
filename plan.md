@@ -8,6 +8,31 @@ Contexto do Projeto
 
 O nation.fun é uma plataforma inovadora que permite aos usuários criar, configurar e gerenciar agentes de IA autônomos. Atualmente, o projeto possui uma interface básica de chat hospedada no GitHub Pages. O objetivo é evoluir para uma plataforma completa com autenticação Web3, marketplace de NFTs (Nation Pass), sistema de créditos baseado em tokens NATION, e configuração avançada de agentes de IA.
 
+Criação de agente autônomo na plataforma ⁠ nation.fun ⁠ que tenha a habilidade de enviar mensagens para  o Whatsapp. Esse agente ficará escutando um webhook que será as mensagens enviadas via whatsapp.
+
+---
+
+Time Box: 2 sprints (2 semanas por sprint)
+
+Orçamento: R$ 3100 (em ETH)
+
+---
+
+Jornada : 
+
+•⁠  ⁠1 - Login via privy 
+•⁠  ⁠2 - Comprar a NFT do agente ⁠ nation pass ⁠ 
+•⁠  ⁠3 - Criar um novo agente e definir o escopo de atuação.
+
+ex: Você é um atendente de um consultório de dentista  , é capaz de se comunicar com o Google agenda e marcar consultas nos horários disponíveis. 
+
+Você também consegue ajudar os pacientes a tirar dúvidas sobre exames e status do seu tratamento.
+
+•⁠  ⁠4 - Configurar a chave de API do Whatsapp e salva-la via lit protocol ( ou seja iremos mintar uma nft e guardar a chave de API do whatsapp nessa nft de forma criptografada.
+•⁠  ⁠5 - Testes : Aqui o sistema oriente o usuário a como fazer um teste.
+•⁠  ⁠6 - Faq : dúvidas frequentes e tutoriais importantes 
+•⁠  ⁠7 - Feedback : Ao término do feedback vc ganha 100 tokens de test para provar a plataforma.
+
 Conceitos Fundamentais
 
 Agentes de IA Autônomos: São assistentes virtuais inteligentes programáveis que podem executar tarefas específicas, responder perguntas e interagir com usuários através de diferentes canais (chat web, WhatsApp, Telegram).[1][2][3]
