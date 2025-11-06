@@ -159,9 +159,7 @@ Acesse seu projeto em: [https://govinda777.github.io/nation.fun/](https://govind
 
 ## 📖 Documentação
 
-- [Como criar um novo agente](docs/CRIAR_AGENTE.md)
-- [Guia de API](docs/API.md)
-- [Exemplos de uso](docs/EXEMPLOS.md)
+Para uma visão detalhada da arquitetura, guias de instalação, e referência da API, **[acesse nossa documentação completa aqui](https://govinda777.github.io/nation.fun/)**.
 
 ## 🤝 Contribuindo
 
@@ -193,7 +191,7 @@ Este projeto está licenciado sob a [MIT License](LICENSE) - veja o arquivo LICE
 
 ## 📞 Suporte
 
-Tem dúvidas ou problemas? 
+Tem dúvidas ou problemas?
 
 - 📧 Abra uma [issue](https://github.com/govinda777/nation.fun/issues)
 - 💬 Participate das discussões
