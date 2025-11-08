@@ -6,6 +6,9 @@
 [![GitHub stars](https://img.shields.io/github/stars/govinda777/nation.fun?style=social)](https://github.com/govinda777/nation.fun)
 [![GitHub forks](https://img.shields.io/github/forks/govinda777/nation.fun?style=social)](https://github.com/govinda777/nation.fun)
 
+[Doc](https://govinda777.github.io/nation.fun/)
+[Site](https://nationfun.vercel.app/)
+
 ## 📋 Sobre o Projeto
 
 **nation.fun** é uma plataforma inovadora e bem estruturada que funciona como um projeto modelo para conectar com agentes inteligentes e criar novos agentes de forma prática e eficiente. Este projeto foi desenvolvido com as melhores práticas de engenharia de software, incluindo testes unitários, BDD (Behavior-Driven Development), integração com Next.js e hospedagem via GitHub Pages.
