@@ -1,219 +1,174 @@
-# 🚀 nation.fun
+# Nation Agent – Chat com IA + WhatsApp (Nuxt 4 + Vue 3)
 
-> Um projeto modelo para conectar agentes e criar novos de forma simples e elegante
+[![Nuxt 4](https://img.shields.io/badge/Nuxt-4-brightgreen)](https://nuxt.com)
+[![Vue 3](https://img.shields.io/badge/Vue-3-success)](https://vuejs.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/govinda777/nation.fun?style=social)](https://github.com/govinda777/nation.fun)
-[![GitHub forks](https://img.shields.io/github/forks/govinda777/nation.fun?style=social)](https://github.com/govinda777/nation.fun)
-
-[Doc](https://govinda777.github.io/nation.fun/)
-[Site](https://nationfun.vercel.app/)
-
-## 📋 Sobre o Projeto
-
-**nation.fun** é uma plataforma inovadora e bem estruturada que funciona como um projeto modelo para conectar com agentes inteligentes e criar novos agentes de forma prática e eficiente. Este projeto foi desenvolvido com as melhores práticas de engenharia de software, incluindo testes unitários, BDD (Behavior-Driven Development), integração com Next.js e hospedagem via GitHub Pages.
-
-Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de agentes, criar integrações escaláveis e manter um código limpo e bem documentado.
-
-## Objetivo
-
-Ser uma plataforma que ajude o empreendedor a atender e automatizar o processo de atendimento aos clientes.
-
-## Jornada
-
-- 1 - Login with Privy
-- 2 - Add founds in walley privy
-- 3 - Buy Nation pass
-- 4 - Buy NATO
-- 5 - Add CAP in agente
-- 6 - Add agent by template (atendente : clinica / empresa endenharia / ecommerce )
-- 7 - Channel [whatsapp / telegram] | Integration [calendar / ecommece ]
-
-## Especificação do Projeto nation.fun
-
-### Objetivo Principal
-Fomentar a venda da NFT Nation Pass e do token $NATION, criando uma plataforma que permita o onboarding fácil de usuários para a criação e uso de agentes automatizados, facilitando o atendimento aos seus clientes de forma simples e eficiente.
-
-### Descrição
-O projeto visa permitir que, em poucos passos, qualquer usuário possa criar seu próprio agente automatizado, capaz de atender clientes em diferentes nichos e canais, automatizando processos de atendimento para empreendedores e empresas.
-
-### Funcionalidades Principais
-1. **Login com Privy:** Autenticação segura e prática via Privy.
-2. **Adicionar fundos na carteira Privy:** Usuários adicionam fundos para operações dentro da plataforma.
-3. **Comprar Nation Pass (NFT):** Venda da NFT que dá acesso a funcionalidades exclusivas.
-4. **Comprar token $NATION:** Facilita transações e interações dentro do ecossistema.
-5. **Adicionar CAP no agente:** Personalização e configuração do agente automatizado.
-6. **Adicionar agente por template:** Criação rápida com modelos prontos para diferentes perfis:
-    - Atendente para clínica
-    - Empresa de engenharia
-    - E-commerce
-7. **Canais e integrações:** Suporte para múltiplos canais e integrações, como:
-    - Canais: WhatsApp, Telegram
-    - Integrações: Calendário, E-commerce
-
-### Público-Alvo
-Empreendedores e pequenos negócios que buscam automatizar e melhorar o atendimento ao cliente, utilizando agentes automatizados sem complexidade técnica.
-
-### Benefícios Esperados
-- Processo simplificado de onboarding para usuários.
-- Automatização eficiente de processos de atendimento.
-- Expansão do uso das NFTs e tokens no ecossistema Nation.
-- Plataforma escalável e integrável com vários canais e ferramentas externas.
-
-## ✨ Características Principais
-
-- **Conexão com Agentes**: Conecte-se facilmente com agentes existentes
-- **Criação de Novos Agentes**: Interface intuitiva para criar e gerenciar agentes
-- **Estrutura Limpa**: Projeto bem organizado e fácil de estender
-- **Testes Automatizados**: Cobertura com testes unitários e BDD
-- **Deploy Automático**: Hospedagem via GitHub Pages
-- **Documentação Completa**: Código autoexplicativo com boas práticas
-
-## 🛠️ Tecnologias Utilizadas
-
-| Tecnologia | Uso |
-|-----------|-----|
-| **Gherkin** | BDD e especificações de comportamento |
-| **JavaScript** | Lógica e interatividade |
-| **Next.js** | Framework React para aplicações web |
-| **CSS** | Estilos e design responsivo |
-| **HTML** | Marcação semântica |
-| **Git** | Controle de versão |
-| **GitHub Pages** | Hospedagem estática |
-
-## 🚀 Como Começar
-
-### Pré-requisitos
-
-- Node.js 16+ instalado
-- npm ou yarn como gerenciador de pacotes
-- Git instalado na sua máquina
-
-### Instalação
-
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/govinda777/nation.fun.git
-   cd nation.fun
-   ```
-
-2. **Instale as dependências:**
-   ```bash
-   npm install
-   # ou
-   yarn install
-   ```
-
-3. **Execute o projeto em desenvolvimento:**
-   ```bash
-   npm run dev
-   # ou
-   yarn dev
-   ```
-
-4. **Abra no navegador:**
-   ```
-   http://localhost:3000
-   ```
-
-## 📁 Estrutura do Projeto
-
-```
-nation.fun/
-├── public/              # Arquivos estáticos
-├── components/          # Componentes React reutilizáveis
-├── pages/              # Páginas da aplicação
-├── styles/             # Arquivos de estilo CSS
-├── features/           # Especificações BDD (.feature)
-├── tests/              # Testes unitários
-├── next.config.js      # Configuração Next.js
-├── package.json        # Dependências do projeto
-└── README.md           # Este arquivo
-```
-
-## 🧪 Testes
-
-Execute os testes para garantir que tudo está funcionando corretamente:
-
-```bash
-# Testes unitários
-npm run test
-
-# BDD com Gherkin
-npm run test:bdd
-
-# Cobertura de testes
-npm run test:coverage
-```
-
-## 🚢 Deploy
-
-O projeto está configurado para deploy automático via GitHub Pages:
-
-```bash
-# Build para produção
-npm run build
-
-# Deploy
-npm run deploy
-```
-
-Acesse seu projeto em: [https://govinda777.github.io/nation.fun/](https://govinda777.github.io/nation.fun/)
-
-## 📖 Documentação
-
-Para uma visão detalhada da arquitetura, guias de instalação, e referência da API, **[acesse nossa documentação completa aqui](https://govinda777.github.io/nation.fun/)**.
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Para contribuir com o projeto:
-
-1. Faça um Fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona MinhaFeature'`)
-4. Push para a branch (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
-
-Para mais detalhes, veja o [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## 📋 Código de Conduta
-
-Este projeto adota um Código de Conduta que todos os contribuidores devem seguir. Leia o [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) para mais informações.
-
-## 📄 Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE) - veja o arquivo LICENSE para detalhes.
-
-## 🎯 Roadmap
-
-- [ ] Autenticação de usuários
-- [ ] Dashboard avançado de agentes
-- [ ] Integração com mais plataformas
-- [ ] API REST completa
-- [ ] Documentação em vídeo
-
-## 📞 Suporte
-
-Tem dúvidas ou problemas? 
-
-- 📧 Abra uma [issue](https://github.com/govinda777/nation.fun/issues)
-- 💬 Participate das discussões
-- 📚 Consulte a [documentação](docs/)
-
-## 👤 Autor
-
-**Govinda** - [@govinda777](https://github.com/govinda777)
-
-## 🙏 Agradecimentos
-
-Agradeço a todos que contribuem, reportam bugs e sugerem melhorias para este projeto!
+> **Chat em tempo real com IA (intentkit-001)** via API da Crestal Network, com botão de teste para webhook do WhatsApp.  
+> Totalmente migrado do JavaScript vanilla para **Nuxt 4 + Vue 3 + TypeScript + Composables**.
 
 ---
 
-<div align="center">
+## Demo (em desenvolvimento)
 
-Made with ❤️ by [govinda777](https://github.com/govinda777)
+![Preview do Chat](./public/preview.png)  
+*(Adicione uma screenshot real do chat aqui depois)*
 
-[⬆ voltar ao topo](#nation.fun)
+---
 
-</div>
+## Funcionalidades
+
+- Chat interativo com IA
+- Envio com Enter ou botão
+- Botão de teste para simular entrada do WhatsApp
+- Token protegido no servidor (nunca exposto no frontend)
+- Auto-scroll nas mensagens
+- Tratamento de erros robusto
+- Estrutura modular e escalável
+
+---
+
+## Tecnologias
+
+| Camada | Tecnologia |
+|-------|------------|
+| Framework | [Nuxt 4](https://nuxt.com) |
+| UI | Vue 3 + Composition API |
+| Estado | `ref()` + `composables` |
+| API | Nitro Server Routes (`server/api/`) |
+| Fetch | `$fetch` (seguro client & server) |
+| Estilos | CSS puro (scoped) |
+
+---
+
+## Estrutura do Projeto
+
+```bash
+nation-agent-nuxt/
+├── app.vue                    # Layout global
+├── pages/
+│   └── index.vue              # Página principal
+├── components/
+│   └── ChatBox.vue            # Componente do chat
+├── composables/
+│   └── useChat.ts             # Lógica de envio e mensagens
+├── server/
+│   ├── api/
+│   │   ├── chat.ts            # Proxy seguro para IA
+│   │   └── whatsapp.post.ts   # Simula webhook do WhatsApp
+├── public/
+│   └── preview.png            # (opcional) screenshot
+├── .env                       # Token (NUNCA commit!)
+├── nuxt.config.ts
+├── package.json
+└── README.md
+```
+
+---
+
+## Como Rodar Localmente
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/seu-usuario/nation-agent-nuxt.git
+cd nation-agent-nuxt
+```
+
+### 2. Instale as dependências
+
+```bash
+npm install
+```
+
+### 3. Crie o arquivo `.env`
+
+```env
+NATION_TOKEN=sk-seu-token-aqui
+```
+
+> **Nunca commit o `.env`!** Ele já está no `.gitignore`.
+
+### 4. Inicie o servidor de desenvolvimento
+
+```bash
+npm run dev
+```
+
+Acesse: [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Endpoints da API
+
+| Método | Rota | Descrição |
+|-------|------|-----------|
+| `POST` | `/api/chat` | Envia mensagem para IA (token protegido) |
+| `POST` | `/api/whatsapp` | Simula entrada do WhatsApp |
+
+---
+
+## Segurança
+
+- Token da IA **nunca vai para o cliente**
+- Proxy em `server/api/chat.ts`
+- Validação de entrada e saída
+- Tratamento de erros com `createError`
+
+---
+
+## Deploy (Vercel, Netlify, Cloudflare)
+
+```bash
+npm run build
+```
+
+- **Vercel**: `vercel`
+- **Netlify**: `netlify deploy`
+- **Nitro**: Suporte nativo a serverless
+
+> **Lembre-se de configurar a variável `NATION_TOKEN` no painel do deploy.**
+
+---
+
+## Próximos Passos (Roadmap)
+
+| Feature | Status |
+|-------|--------|
+| Histórico com `localStorage` | Pendente |
+| Suporte a Markdown | Pendente |
+| Loading spinner | Pendente |
+| Dark mode | Pendente |
+| Integração real com WhatsApp (Meta API) | Pendente |
+
+---
+
+## Contribuição
+
+1. Fork o projeto
+2. Crie uma branch: `git checkout -b feature/nova-func`
+3. Commit: `git commit -m "Adiciona X"`
+4. Push: `git push origin feature/nova-func`
+5. Abra um Pull Request
+
+---
+
+## Licença
+
+[MIT License](LICENSE) – sinta-se livre para usar, modificar e distribuir.
+
+---
+
+## Autor
+
+**Marcelo Magalhães**  
+[GitHub](https://github.com/marceloamagalhaes) | [LinkedIn](https://linkedin.com/in/marceloamagalhaes)
+
+---
+
+> **"Do vanilla ao Vue em um passo."** – Nation Agent
+
+---
+
+Feito com ❤️ e Nuxt 4.  
+**Star no GitHub se ajudou!** 🌟
