@@ -132,8 +132,49 @@ h1, h2, h3 {
     margin-left: auto;
 }
 
-.assistant-message {
-    background-color: #e9e9eb;
-    color: black;
-    align-self: flex-start;
+body {
+  font-family: Arial, sans-serif;
+  color: var(--dark-text);
+  line-height: 1.6;
+  margin: 0;
+  background-color: var(--light-background);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+h1, h2, h3 {
+  color: var(--dark-text);
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  h2 {
+    font-size: 28px;
+  }
+  .btn {
+    padding: 10px 20px;
+  }
 }
