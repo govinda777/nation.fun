@@ -1,8 +1,13 @@
 import Head from 'next/head';
 import { usePrivy } from '@privy-io/react-auth';
+import { useState } from 'react';
+import ChatWidget from '../components/ChatWidget';
 
 export default function Hotsite() {
   const { login } = usePrivy();
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const toggleChat = () => setIsChatOpen(!isChatOpen);
 
   return (
     <div>
@@ -132,6 +137,13 @@ export default function Hotsite() {
       <footer className="container">
         {/* Rodapé aqui */}
       </footer>
+
+      <div className="chat-flutuante">
+        <button onClick={toggleChat} className="chat-botao">
+          Chat
+        </button>
+        {isChatOpen && <ChatWidget />}
+      </div>
     </div>
   );
 }

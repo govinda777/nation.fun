@@ -51,3 +51,130 @@ h1, h2, h3 {
     padding: 10px 20px;
   }
 }
+
+/* Estilos do Chat Flutuante */
+.chat-flutuante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.chat-botao {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#chat-container {
+  width: 350px;
+  height: 500px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #fff;
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+#chat-messages {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ccc;
+}
+
+#chat-input {
+    display: flex;
+    padding: 10px;
+}
+
+#chat-input input {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 1em;
+}
+
+#chat-input button {
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 18px;
+    max-width: 80%;
+    line-height: 1.4;
+}
+
+.user-message {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: var(--dark-text);
+  line-height: 1.6;
+  margin: 0;
+  background-color: var(--light-background);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+h1, h2, h3 {
+  color: var(--dark-text);
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  h2 {
+    font-size: 28px;
+  }
+  .btn {
+    padding: 10px 20px;
+  }
+}
