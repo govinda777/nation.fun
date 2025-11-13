@@ -1,0 +1,18 @@
+/* Adicione este estilo para organizar a exibição dos ativos */
+.wallet-assets {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.wallet-info {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.wallet-info p {
+  margin: 5px 0;
+}
