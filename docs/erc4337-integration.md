@@ -47,3 +47,13 @@ import OnRamp from '../components/OnRamp';
 ```
 
 A lógica de exibição do widget e a execução do swap já estão encapsuladas dentro do componente, proporcionando uma integração simples e rápida.
+
+### Configuração de Variáveis de Ambiente
+
+Para que a integração com a Ramp Network funcione, é necessário configurar a seguinte variável de ambiente em um arquivo `.env.local` na raiz do projeto:
+
+```
+NEXT_PUBLIC_RAMP_API_KEY=sua_chave_de_api_da_ramp
+```
+
+Substitua `sua_chave_de_api_da_ramp` pela chave de API fornecida pela Ramp Network.

@@ -11,10 +11,10 @@ const uniswapV2RouterAbi = [{"inputs":[{"internalType":"address","name":"_factor
 export const getProvider = () => {
   // Using Privy's provider which is injected into window.ethereum
   if (typeof window.ethereum !== 'undefined') {
-    return new ethers.providers.Web3Provider(window.ethereum);
+    return new ethers.BrowserProvider(window.ethereum);
   }
   // Fallback to a public provider if no wallet is connected
-  return new ethers.providers.JsonRpcProvider('https://mainnet.base.org');
+  return new ethers.JsonRpcProvider('https://mainnet.base.org');
 };
 
 // Function to get the NATO token contract instance

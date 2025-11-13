@@ -15,12 +15,12 @@ const OnRamp = () => {
       const provider = getProvider();
       const natoContract = getNatoTokenContract(provider);
       const natoBalance = await natoContract.balanceOf(user.wallet.address);
-      setNatoBalance(ethers.utils.formatUnits(natoBalance, 18));
+      setNatoBalance(ethers.formatUnits(natoBalance, 18));
 
       const usdcAddress = '0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913';
       const usdcContract = new ethers.Contract(usdcAddress, natoTokenAbi, provider);
       const usdcBalance = await usdcContract.balanceOf(user.wallet.address);
-      setUsdcBalance(ethers.utils.formatUnits(usdcBalance, 6)); // USDC has 6 decimals
+      setUsdcBalance(ethers.formatUnits(usdcBalance, 6)); // USDC has 6 decimals
     }
   };
 
@@ -35,7 +35,7 @@ const OnRamp = () => {
         hostLogoUrl: 'https://nation.fun/logo.png', // Replace with your actual logo URL
         swapAsset: 'BASE_USDC',
         userAddress: user.wallet.address,
-        hostApiKey: RAMP_API_KEY
+        hostApiKey: process.env.NEXT_PUBLIC_RAMP_API_KEY,
       }).on('*', (event) => {
         if (event.type === 'PURCHASE_SUCCESSFUL') {
           fetchBalances();
@@ -50,7 +50,7 @@ const OnRamp = () => {
       try {
         const provider = getProvider();
         const signer = provider.getSigner();
-        const usdcAmount = ethers.utils.parseUnits(usdcBalance, 6);
+        const usdcAmount = ethers.parseUnits(usdcBalance, 6);
         await swapUsdcToNato(signer, usdcAmount);
         fetchBalances();
       } catch (error) {
