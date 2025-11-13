@@ -12,5 +12,6 @@ nav:
     - 'O que é um Agente?': 'introduction/what-is-an-agent.md'
   - 'Guias':
     - 'Instalação e Primeiros Passos': 'guides/getting-started.md'
+    - 'Onramp de Tokens (NATO)': 'web3/onramp.md'
   - 'Referência Técnica':
     - 'Integração com WhatsApp': 'reference/whatsapp-integration.md'
