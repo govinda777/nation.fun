@@ -18,10 +18,7 @@ export default function Hotsite() {
       </Head>
 
       <header className="container" style={{ padding: '20px 0', display: 'flex', alignItems: 'center' }}>
-        <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="48" fill="#007bff"/>
-          <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="40" fontFamily="Arial, sans-serif">N</text>
-        </svg>
+        <img src="/logo.svg" alt="Nation.fun Logo" width="40" height="40" className="rotating-logo" />
         <h1 style={{ marginLeft: '10px', fontSize: '24px' }}>Nation.fun</h1>
       </header>
 
@@ -66,17 +63,17 @@ export default function Hotsite() {
             <h2 style={{ fontSize: '36px', marginBottom: '40px' }}>Perfeito para o seu Negócio</h2>
             <div style={{ display: 'flex', justifyContent: 'space-around', gap: '20px', flexWrap: 'wrap' }}>
               <div style={{ flex: '1', minWidth: '280px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-                <img src="https://placehold.co/300x200/007BFF/FFFFFF?text=Clínica+Organizada" alt="Exemplo de agente para clínica" style={{ maxWidth: '100%', borderRadius: '5px', marginBottom: '15px' }} />
+                <img src="https://i.imgur.com/6J2z1yC.png" alt="Exemplo de agente para clínica" style={{ maxWidth: '100%', borderRadius: '5px', marginBottom: '15px' }} />
                 <h4>Atendente de Clínica</h4>
                 <p>Agenda consultas, responde dúvidas e envia lembretes automaticamente.</p>
               </div>
               <div style={{ flex: '1', minWidth: '280px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-                <img src="https://placehold.co/300x200/17A2B8/FFFFFF?text=Projeto+de+Engenharia" alt="Exemplo de agente para engenharia" style={{ maxWidth: '100%', borderRadius: '5px', marginBottom: '15px' }} />
+                <img src="https://i.imgur.com/7gZ3Z8w.png" alt="Exemplo de agente para engenharia" style={{ maxWidth: '100%', borderRadius: '5px', marginBottom: '15px' }} />
                 <h4>Orçamentos de Engenharia</h4>
                 <p>Qualifica leads, coleta requisitos e envia orçamentos iniciais 24/7.</p>
               </div>
               <div style={{ flex: '1', minWidth: '280px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-                <img src="https://placehold.co/300x200/28A745/FFFFFF?text=Vendas+Online" alt="Exemplo de agente para e-commerce" style={{ maxWidth: '100%', borderRadius: '5px', marginBottom: '15px' }} />
+                <img src="https://i.imgur.com/8hZ1V9B.png" alt="Exemplo de agente para e-commerce" style={{ maxWidth: '100%', borderRadius: '5px', marginBottom: '15px' }} />
                 <h4>Assistente de E-commerce</h4>
                 <p>Ajuda clientes a encontrar produtos, rastrear pedidos e processar devoluções.</p>
               </div>
