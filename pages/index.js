@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { usePrivy } from '@privy-io/react-auth';
 import { useState } from 'react';
 import ChatWidget from '../components/ChatWidget';
+import OnRamp from '../components/OnRamp';
 
 export default function Hotsite() {
   const { login } = usePrivy();
@@ -50,6 +51,13 @@ export default function Hotsite() {
                 <p>Escolha um template pronto, configure e comece a automatizar em minutos.</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section style={{ padding: '60px 20px', backgroundColor: '#fff', textAlign: 'center' }}>
+          <div className="container">
+            <h2 style={{ fontSize: '36px', marginBottom: '40px' }}>Compre NATO Tokens</h2>
+            <OnRamp />
           </div>
         </section>
 
