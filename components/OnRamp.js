@@ -32,7 +32,7 @@ const OnRamp = () => {
     if (user && user.wallet) {
       new RampInstantSDK({
         hostAppName: 'Nation.fun',
-        hostLogoUrl: 'https://nation.fun/logo.png', // Replace with your actual logo URL
+        hostLogoUrl: 'https://nation.fun/logo.svg', // Replace with your actual logo URL
         swapAsset: 'BASE_USDC',
         userAddress: user.wallet.address,
         hostApiKey: process.env.NEXT_PUBLIC_RAMP_API_KEY,

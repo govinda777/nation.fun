@@ -1,0 +1,32 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fd00ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3c00ff;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fdff00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ff38;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f9ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fd00ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <g transform="translate(100,100)">
+    <path d="M 0 0 L 50 0 A 50 50 0 0 1 25 43.3 Z" fill="url(#grad1)" transform="rotate(0)"/>
+    <path d="M 0 0 L 50 0 A 50 50 0 0 1 25 43.3 Z" fill="url(#grad2)" transform="rotate(60)"/>
+    <path d="M 0 0 L 50 0 A 50 50 0 0 1 25 43.3 Z" fill="url(#grad3)" transform="rotate(120)"/>
+    <path d="M 0 0 L 50 0 A 50 50 0 0 1 25 43.3 Z" fill="url(#grad1)" transform="rotate(180)"/>
+    <path d="M 0 0 L 50 0 A 50 50 0 0 1 25 43.3 Z" fill="url(#grad2)" transform="rotate(240)"/>
+    <path d="M 0 0 L 50 0 A 50 50 0 0 1 25 43.3 Z" fill="url(#grad3)" transform="rotate(300)"/>
+
+    <path d="M 0 0 L 30 0 A 30 30 0 0 1 15 25.98 Z" fill="#fdff00" transform="rotate(30)"/>
+    <path d="M 0 0 L 30 0 A 30 30 0 0 1 15 25.98 Z" fill="#00ff38" transform="rotate(90)"/>
+    <path d="M 0 0 L 30 0 A 30 30 0 0 1 15 25.98 Z" fill="#00f9ff" transform="rotate(150)"/>
+    <path d="M 0 0 L 30 0 A 30 30 0 0 1 15 25.98 Z" fill="#3c00ff" transform="rotate(210)"/>
+    <path d="M 0 0 L 30 0 A 30 30 0 0 1 15 25.98 Z" fill="#fd00ff" transform="rotate(270)"/>
+    <path d="M 0 0 L 30 0 A 30 30 0 0 1 15 25.98 Z" fill="#fdff00" transform="rotate(330)"/>
+    <circle cx="0" cy="0" r="10" fill="white"/>
+  </g>
+</svg>

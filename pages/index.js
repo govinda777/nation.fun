@@ -18,10 +18,7 @@ export default function Hotsite() {
       </Head>
 
       <header className="container" style={{ padding: '20px 0', display: 'flex', alignItems: 'center' }}>
-        <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="48" fill="#007bff"/>
-          <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="40" fontFamily="Arial, sans-serif">N</text>
-        </svg>
+        <img src="/logo.svg" alt="Nation.fun Logo" width="40" height="40" />
         <h1 style={{ marginLeft: '10px', fontSize: '24px' }}>Nation.fun</h1>
       </header>
 
