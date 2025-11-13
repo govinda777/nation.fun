@@ -1,4 +1,4 @@
-# 🚀 nation.fun
+# 🚀 nation.fun!
 
 > Um projeto modelo para conectar agentes e criar novos de forma simples e elegante
 
