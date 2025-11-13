@@ -35,7 +35,7 @@ const OnRamp = () => {
         hostLogoUrl: 'https://nation.fun/logo.png', // Replace with your actual logo URL
         swapAsset: 'BASE_USDC',
         userAddress: user.wallet.address,
-        hostApiKey: 'c9f7b8a1b2c3d4e5f6a7b8c9d0e1f2a3', // Replace with your actual Ramp API key
+        hostApiKey: RAMP_API_KEY
       }).on('*', (event) => {
         if (event.type === 'PURCHASE_SUCCESSFUL') {
           fetchBalances();
