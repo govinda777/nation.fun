@@ -45,4 +45,5 @@ npm-debug.log
 # Log files
 *.log
 dev_server.log
-\n# Hardhat artifacts\nhardhat/cache/\nhardhat/artifacts/\n
+
+
