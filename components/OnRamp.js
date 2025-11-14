@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk';
 
 const OnRamp = () => {
-  const { user } = usePrivy();
+  const { user } = usePrivy() || {}; // Fallback for test environment
   const [natoBalance, setNatoBalance] = useState('0');
   const [usdcBalance, setUsdcBalance] = useState('0');
   const [isSwapping, setIsSwapping] = useState(false);

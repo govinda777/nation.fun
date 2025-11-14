@@ -4,9 +4,11 @@ import { useState } from 'react';
 import ChatWidget from '../components/ChatWidget';
 import OnRamp from '../components/OnRamp';
 import Header from '../components/Header';
+import NationPassMinter from '../components/NationPassMinter';
+import NatoSwap from '../components/NatoSwap';
 
 export default function Hotsite() {
-  const { login } = usePrivy();
+  const { login } = usePrivy() || {}; // Fallback for test environment
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const toggleChat = () => setIsChatOpen(!isChatOpen);
@@ -51,8 +53,22 @@ export default function Hotsite() {
 
         <section style={{ padding: '60px 20px', backgroundColor: '#fff', textAlign: 'center' }}>
           <div className="container">
-            <h2 style={{ fontSize: '36px', marginBottom: '40px' }}>Compre NATO Tokens</h2>
+            <h2 style={{ fontSize: '36px', marginBottom: '40px' }}>Purchase Your Nation Pass</h2>
+            <NationPassMinter />
+          </div>
+        </section>
+
+        <section style={{ padding: '60px 20px', backgroundColor: '#f9f9f9', textAlign: 'center' }}>
+          <div className="container">
+            <h2 style={{ fontSize: '36px', marginBottom: '40px' }}>Step 1: Get Funds</h2>
             <OnRamp />
+          </div>
+        </section>
+
+        <section style={{ padding: '60px 20px', backgroundColor: '#fff', textAlign: 'center' }}>
+          <div className="container">
+            <h2 style={{ fontSize: '36px', marginBottom: '40px' }}>Step 2: Swap for NATO Tokens</h2>
+            <NatoSwap />
           </div>
         </section>
 

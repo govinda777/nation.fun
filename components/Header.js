@@ -2,9 +2,9 @@ import { usePrivy, useWallets } from '@privy-io/react-auth';
 import Link from 'next/link';
 
 export default function Header() {
-  const { authenticated, login, logout } = usePrivy();
-  const { wallets } = useWallets();
-  const wallet = wallets[0];
+  const { authenticated, login, logout } = usePrivy() || {}; // Fallback for test environment
+  const { wallets } = useWallets() || {}; // Fallback for test environment
+  const wallet = wallets && wallets.length > 0 ? wallets[0] : null;
 
   return (
     <header className="container header-container">
