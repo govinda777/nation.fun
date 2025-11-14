@@ -46,4 +46,8 @@ npm-debug.log
 *.log
 dev_server.log
 
+# Hardhat
+hardhat/cache/
+hardhat/artifacts/
+hardhat/node_modules/
 
