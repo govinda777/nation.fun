@@ -13,12 +13,14 @@ export default function Header() {
         <h1 className="logo-text">Nation.fun</h1>
       </Link>
       <nav>
-        {authenticated && wallet ? (
+        {authenticated ? (
           <div className="nav-authenticated">
             <Link href="/dashboard" className="btn-secondary">Dashboard</Link>
-            <div className="wallet-address">
-              {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
-            </div>
+            {wallet && (
+              <div className="wallet-address">
+                {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
+              </div>
+            )}
             <button onClick={logout} className="btn-secondary">Logout</button>
           </div>
         ) : (
