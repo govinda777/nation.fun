@@ -3,6 +3,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useState } from 'react';
 import ChatWidget from '../components/ChatWidget';
 import OnRamp from '../components/OnRamp';
+import Header from '../components/Header';
 
 export default function Hotsite() {
   const { login } = usePrivy();
@@ -17,10 +18,7 @@ export default function Hotsite() {
         <meta name="description" content="Crie agentes de IA para o seu negócio em minutos, de forma fácil e segura." />
       </Head>
 
-      <header className="container" style={{ padding: '20px 0', display: 'flex', alignItems: 'center' }}>
-        <img src="/logo.svg" alt="Nation.fun Logo" width="40" height="40" />
-        <h1 style={{ marginLeft: '10px', fontSize: '24px' }}>Nation.fun</h1>
-      </header>
+      <Header />
 
       <main>
         <section style={{ textAlign: 'center', padding: '100px 20px' }}>
