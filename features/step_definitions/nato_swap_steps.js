@@ -1,68 +1,61 @@
-import { Given, When, Then, BeforeAll, AfterAll } from '@cucumber/cucumber';
-import { chromium } from 'playwright';
-import { expect } from 'expect-playwright';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import { ethers } from 'ethers';
-import { getNatoTokenContract } from '../../services/web3.js';
+const { Given, When, Then } = require('@cucumber/cucumber');
+const { expect } = require('@playwright/test');
+const { ethers } = require('ethers');
+const {
+  getNatoTokenContract,
+  getUsdcContract,
+  getTestSigner,
+  swapUsdcToNato,
+  getProvider
+} = require('../../services/web3.js');
 
-const execAsync = promisify(exec);
+let testSigner;
+let natoTokenContract;
+let usdcContract;
+let initialNatoBalance;
+let finalNatoBalance;
+const usdcAmountToSwap = ethers.parseUnits("100", 6); // 100 USDC
 
-let browser;
-let page;
-let hardhatNode;
+// Helper to set USDC balance for a test account
+async function setUsdcBalance(provider, userAddress, amount) {
+    const usdcHolder = "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"; // A known USDC holder on Base mainnet
+    await provider.send("hardhat_impersonateAccount", [usdcHolder]);
+    const usdcSigner = await provider.getSigner(usdcHolder);
+    const localUsdcContract = getUsdcContract(usdcSigner);
+    await localUsdcContract.transfer(userAddress, amount);
+    await provider.send("hardhat_stopImpersonatingAccount", [usdcHolder]);
+}
 
-// Mock wallet for the test user
-const MOCK_WALLET_ADDRESS = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8'; // Second Hardhat account
+Given('um usuário com saldo de USDC e saldo zero de NATO', async function () {
+    process.env.NEXT_PUBLIC_IS_TESTING = 'true';
+    testSigner = await getTestSigner();
+    natoTokenContract = getNatoTokenContract(testSigner);
+    usdcContract = getUsdcContract(testSigner);
+    const provider = getProvider();
 
-BeforeAll(async () => {
-  // Start a local Hardhat node in the background
-  hardhatNode = exec('cd hardhat && npx hardhat node');
-  await new Promise(resolve => setTimeout(resolve, 5000));
+    // Set a starting USDC balance for the test signer
+    await setUsdcBalance(provider, testSigner.address, usdcAmountToSwap);
+    const initialUsdcBalance = await usdcContract.balanceOf(testSigner.address);
+    expect(initialUsdcBalance).toBe(usdcAmountToSwap);
 
-  // Deploy our base contracts
-  await execAsync('cd hardhat && npx hardhat run scripts/deploy.js --network localhost');
-
-  // Setup Uniswap environment
-  // We need a more robust way to get deployed addresses and pass them to the setup script.
-  // For now, this is a placeholder for that logic.
-  // await execAsync('cd hardhat && npx hardhat run scripts/setup-uniswap.js --network localhost');
-
-  browser = await chromium.launch();
+    // Verify initial NATO balance is zero
+    initialNatoBalance = await natoTokenContract.balanceOf(testSigner.address);
+    expect(initialNatoBalance).toBe(0n);
 });
 
-AfterAll(async () => {
-  await browser.close();
-  hardhatNode.kill();
+When('o usuário troca USDC por NATO', async function () {
+    // The component would call this function
+    await swapUsdcToNato(testSigner, usdcAmountToSwap);
 });
 
-Given('I am authenticated and on the homepage with a funded wallet', async function () {
-  // BLOCKER: This step is not fully implemented for the same reason as in the other
-  // test files. It requires injecting a Playwright-controlled "signer" with funds
-  // into the frontend application's context.
-  await page.goto('http://localhost:3000');
-  return 'pending';
-});
+Then('o saldo de NATO do usuário deve ser maior que zero', async function () {
+    finalNatoBalance = await natoTokenContract.balanceOf(testSigner.address);
+    const finalUsdcBalance = await usdcContract.balanceOf(testSigner.address);
 
-Given('the Uniswap V2 environment is set up', function () {
-  // This step is implicitly handled by the BeforeAll hook.
-  // In a real-world scenario, we might add checks here to ensure the pool exists.
-});
+    // The user should have spent their USDC
+    expect(finalUsdcBalance).toBe(0n);
+    // The user should have received some NATO tokens
+    expect(finalNatoBalance).toBeGreaterThan(0n);
 
-When('I swap {float} ETH for NATO tokens', async function (ethAmount) {
-  await page.fill('input[type="number"]', ethAmount.toString());
-  await page.click('button:has-text("Swap")');
-});
-
-Then('the transaction should be successful', async function () {
-  // Wait for the transaction to be mined. A more robust solution would be
-  // to listen for a success event or message on the UI.
-  await new Promise(resolve => setTimeout(resolve, 15000)); // Wait 15 seconds for swap
-});
-
-Then('my NATO token balance should be greater than 0', async function () {
-  const provider = new ethers.JsonRpcProvider('http://127.0.0.1:8545/');
-  const contract = getNatoTokenContract(provider);
-  const balance = await contract.balanceOf(MOCK_WALLET_ADDRESS);
-  expect(Number(balance)).toBeGreaterThan(0);
+    delete process.env.NEXT_PUBLIC_IS_TESTING;
 });
