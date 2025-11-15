@@ -51,3 +51,5 @@ hardhat/cache/
 hardhat/artifacts/
 hardhat/node_modules/
 
+# Test reports
+reports/
