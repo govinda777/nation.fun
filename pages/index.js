@@ -129,6 +129,33 @@ export default function Hotsite() {
           </div>
         </section>
 
+        <section style={{ padding: '60px 20px', backgroundColor: '#fff', textAlign: 'center' }}>
+          <div className="container">
+            <h2 style={{ fontSize: '36px', marginBottom: '20px' }}>Seja Membro e Ganhe Recompensas</h2>
+            <p style={{ fontSize: '18px', maxWidth: '700px', margin: '0 auto 40px' }}>
+              Ao usar nossos agentes e realizar transações, você é recompensado com Govindas Coin (GVC), o nosso token de governança.
+              Quanto mais você usa, mais você ganha.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'space-around', gap: '20px', flexWrap: 'wrap' }}>
+              <div style={{ flex: '1', minWidth: '280px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
+                <h3>Deixe em Staking</h3>
+                <p>Bloqueie seus GVC em nosso protocolo para ganhar ainda mais recompensas e participar de decisões importantes.</p>
+              </div>
+              <div style={{ flex: '1', minWidth: '280px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
+                <h3>Compre NFTs de Membro</h3>
+                <p>Use seus GVC para adquirir NFTs exclusivos que dão acesso a benefícios e funcionalidades premium.</p>
+              </div>
+              <div style={{ flex: '1', minWidth: '280px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
+                <h3>Junte-se à Guild</h3>
+                <p>Faça parte da nossa comunidade exclusiva no Guild.xyz para colaborar, aprender e crescer junto com outros membros.</p>
+              </div>
+            </div>
+            <a href="https://guild.xyz/nationfun" target="_blank" rel="noopener noreferrer" className="btn" style={{ marginTop: '40px' }}>
+              Entre na nossa Guild
+            </a>
+          </div>
+        </section>
+
         <section style={{ padding: '100px 20px', textAlign: 'center', backgroundColor: '#007bff' }}>
           <div className="container">
             <h2 style={{ fontSize: '36px', color: '#fff', marginBottom: '20px' }}>Pronto para automatizar seu negócio?</h2>

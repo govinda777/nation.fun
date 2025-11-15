@@ -8,14 +8,9 @@ const accounts = process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [];
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.24",
+  solidity: "0.8.28",
   networks: {
-    hardhat: {
-      forking: {
-        url: BASE_MAINNET_RPC_URL,
-        blockNumber: 15000000 // Usando um bloco recente para o fork
-      }
-    },
+    hardhat: {},
     base: {
       url: BASE_MAINNET_RPC_URL,
       accounts: accounts,
