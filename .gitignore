@@ -51,5 +51,8 @@ hardhat/cache/
 hardhat/artifacts/
 hardhat/node_modules/
 
-# Test reports
-reports/
+# MkDocs build output
+site/
+
+# General cache directories
+**/.cache/

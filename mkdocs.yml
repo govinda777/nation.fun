@@ -19,8 +19,15 @@ nav:
   - 'Arquitetura':
     - 'Visão Geral': 'arquitetura/visao-geral.md'
     - 'Infraestrutura como Código (IaC)': 'arquitetura/iac.md'
+  - 'Integrações':
+    - 'Canais de Comunicação': 'integrations/communication-channels.md'
+    - 'Ferramentas de Negócios': 'integrations/business-integrations.md'
+  - 'Inteligência de Diálogo':
+    - 'Fluxo de Atendimento': 'dialog-management/service-flow.md'
+    - 'Gestão de Diálogos': 'dialog-management/dialog-management.md'
   - 'Segurança':
     - 'Gerenciamento de Tokens': 'seguranca/gerenciamento-de-tokens.md'
+    - 'Proteção de Chaves e Segredos': 'seguranca/token-security.md'
   - 'Web3':
     - 'Introdução': 'web3/index.md'
     - 'Onramp de Tokens (NATO)': 'web3/onramp.md'
