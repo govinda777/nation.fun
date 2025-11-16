@@ -8,23 +8,17 @@ on:
     branches:
       - main
 
-# Add permissions for GitHub Pages deployment
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   validate:
-    name: Run Build and Tests
+    name: Run Build, Tests and Generate Report
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -43,45 +37,15 @@ jobs:
           TOKEN_NATION: ${{ secrets.TOKEN_NATION_DUMMY }}
           NEXT_PUBLIC_IS_TESTING: true # To connect to a local Hardhat node if needed
 
-  deploy-report:
-    name: Deploy Test Report to Pages
-    # Only run this job on push events to the main branch, after validation succeeds
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: validate
-    runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run E2E tests to generate JSON report
-        # We need to run the tests again to generate the JSON output
-        run: npm run test:e2e
-        env:
-          TOKEN_NATION: ${{ secrets.TOKEN_NATION_DUMMY }}
-          NEXT_PUBLIC_IS_TESTING: true
-
       - name: Generate HTML report
+        # Only generate report on push events to the main branch after tests succeed
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: npm run generate-report
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
+      - name: Upload Test Report artifact
+        # Only upload artifact on push events to the main branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
         with:
+          name: test-report # Name of the artifact
           path: ./reports
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
