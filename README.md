@@ -1,5 +1,8 @@
 # 🌐 Nation.fun - Build AI Agents in Minutes
 
+Site [vercel]: https://nationfun.vercel.app/
+Doc [git pages]: https://govinda777.github.io/nation.fun/
+
 [![Build Status](badge-url)]
 [![Users](badge-url)]
 [![License: MIT](badge-url)]
