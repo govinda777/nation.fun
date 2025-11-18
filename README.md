@@ -1,219 +1,106 @@
-# 🚀 nation.fun!
+# 🌐 Nation.fun - Build AI Agents in Minutes
 
-> Um projeto modelo para conectar agentes e criar novos de forma simples e elegante
+[![CI Pipeline](https://github.com/govinda777/nation.fun/actions/workflows/ci.yml/badge.svg)](https://github.com/govinda777/nation.fun/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/govinda777/nation.fun?style=social)](https://github.com/govinda777/nation.fun)
-[![GitHub forks](https://img.shields.io/github/forks/govinda777/nation.fun?style=social)](https://github.com/govinda777/nation.fun)
+> The easiest way to create, deploy, and monetize autonomous AI agents. No coding required.
 
-[Doc](https://govinda777.github.io/nation.fun/)
-[Site](https://nationfun.vercel.app/)
-
-## 📋 Sobre o Projeto
-
-**nation.fun** é uma plataforma inovadora e bem estruturada que funciona como um projeto modelo para conectar com agentes inteligentes e criar novos agentes de forma prática e eficiente. Este projeto foi desenvolvido com as melhores práticas de engenharia de software, incluindo testes unitários, BDD (Behavior-Driven Development), integração com Next.js e hospedagem via GitHub Pages.
-
-Ideal para desenvolvedores que desejam entender como trabalhar com sistemas de agentes, criar integrações escaláveis e manter um código limpo e bem documentado.
-
-## Objetivo
-
-Ser uma plataforma que ajude o empreendedor a atender e automatizar o processo de atendimento aos clientes.
+## 🚀 What You Can Build
 
-## Jornada
-
-- 1 - Login with Privy
-- 2 - Add founds in walley privy
-- 3 - Buy Nation pass
-- 4 - Buy NATO
-- 5 - Add CAP in agente
-- 6 - Add agent by template (atendente : clinica / empresa endenharia / ecommerce )
-- 7 - Channel [whatsapp / telegram] | Integration [calendar / ecommece ]
-
-## Especificação do Projeto nation.fun
-
-### Objetivo Principal
-Fomentar a venda da NFT Nation Pass e do token $NATION, criando uma plataforma que permita o onboarding fácil de usuários para a criação e uso de agentes automatizados, facilitando o atendimento aos seus clientes de forma simples e eficiente.
-
-### Descrição
-O projeto visa permitir que, em poucos passos, qualquer usuário possa criar seu próprio agente automatizado, capaz de atender clientes em diferentes nichos e canais, automatizando processos de atendimento para empreendedores e empresas.
-
-### Funcionalidades Principais
-1. **Login com Privy:** Autenticação segura e prática via Privy.
-2. **Adicionar fundos na carteira Privy:** Usuários adicionam fundos para operações dentro da plataforma.
-3. **Comprar Nation Pass (NFT):** Venda da NFT que dá acesso a funcionalidades exclusivas.
-4. **Comprar token $NATION:** Facilita transações e interações dentro do ecossistema.
-5. **Adicionar CAP no agente:** Personalização e configuração do agente automatizado.
-6. **Adicionar agente por template:** Criação rápida com modelos prontos para diferentes perfis:
-    - Atendente para clínica
-    - Empresa de engenharia
-    - E-commerce
-7. **Canais e integrações:** Suporte para múltiplos canais e integrações, como:
-    - Canais: WhatsApp, Telegram
-    - Integrações: Calendário, E-commerce
+- **Social Media Bots** - Twitter, Telegram, Discord agents that engage your community
+- **Trading Agents** - Autonomous crypto trading on blockchain
+- **Notification Systems** - Smart alerts and notifications
+- **Customer Support** - 24/7 automated customer service
+- **Content Creation** - AI-powered content generators
+- **Data Analysis** - Automated reporting and insights
 
-### Público-Alvo
-Empreendedores e pequenos negócios que buscam automatizar e melhorar o atendimento ao cliente, utilizando agentes automatizados sem complexidade técnica.
-
-### Benefícios Esperados
-- Processo simplificado de onboarding para usuários.
-- Automatização eficiente de processos de atendimento.
-- Expansão do uso das NFTs e tokens no ecossistema Nation.
-- Plataforma escalável e integrável com vários canais e ferramentas externas.
-
-## ✨ Características Principais
+## ⚡ Quick Start (5 minutes)
 
-- **Conexão com Agentes**: Conecte-se facilmente com agentes existentes
-- **Criação de Novos Agentes**: Interface intuitiva para criar e gerenciar agentes
-- **Estrutura Limpa**: Projeto bem organizado e fácil de estender
-- **Testes Automatizados**: Cobertura com testes unitários e BDD
-- **Deploy Automático**: Hospedagem via GitHub Pages
-- **Documentação Completa**: Código autoexplicativo com boas práticas
+### 1. Sign Up
+Visit [app.nation.fun](https://app.nation.fun) and create your account
 
-## 🛠️ Tecnologias Utilizadas
+### 2. Choose a Template
+Select from pre-built agent templates or start from scratch
 
-| Tecnologia | Uso |
-|-----------|-----|
-| **Gherkin** | BDD e especificações de comportamento |
-| **JavaScript** | Lógica e interatividade |
-| **Next.js** | Framework React para aplicações web |
-| **CSS** | Estilos e design responsivo |
-| **HTML** | Marcação semântica |
-| **Git** | Controle de versão |
-| **GitHub Pages** | Hospedagem estática |
+### 3. Configure Your Agent
+- Name and personality
+- Select skills (Twitter, Blockchain, APIs, etc.)
+- Set parameters and rules
 
-## 🚀 Como Começar
+### 4. Deploy
+One-click deployment to live environment
 
-### Pré-requisitos
+### 5. Monitor & Earn
+Track performance and earn rewards
 
-- Node.js 16+ instalado
-- npm ou yarn como gerenciador de pacotes
-- Git instalado na sua máquina
+## ✨ Key Features
 
-### Instalação
+- 🎯 **No-Code Builder** - Drag-and-drop interface
+- 🛠️ **Pre-built Skills** - Twitter, Telegram, Blockchain, HTTP APIs
+- 💰 **Monetization** - Earn tokens from your agents
+- 📊 **Analytics** - Real-time performance metrics
+- 🔒 **Secure** - Enterprise-grade security
+- 🌍 **Multi-chain** - Deploy on Base, Ethereum, Polygon
+- 🤝 **Community** - Share and monetize your agents
 
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/govinda777/nation.fun.git
-   cd nation.fun
-   ```
+## 🔗 Technology Stack
 
-2. **Instale as dependências:**
-   ```bash
-   npm install
-   # ou
-   yarn install
-   ```
+- **Frontend:** Next.js + React
+- **Blockchain:** EVM-compatible chains (Base, Ethereum, Polygon)
+- **Infrastructure:** Vercel
 
-3. **Execute o projeto em desenvolvimento:**
-   ```bash
-   npm run dev
-   # ou
-   yarn dev
-   ```
+## 📖 Full Documentation
 
-4. **Abra no navegador:**
-   ```
-   http://localhost:3000
-   ```
+- [Getting Started Guide](./docs/getting-started.md)
+- [Create Your First Agent](./docs/user-guides/first-agent.md)
+- [API Reference](./docs/api/README.md)
+- [Best Practices](./docs/user-guides/best-practices.md)
+- [Tutorials](./docs/tutorials/)
 
-## 📁 Estrutura do Projeto
+## 🤝 Community & Support
 
-```
-nation.fun/
-├── public/              # Arquivos estáticos
-├── components/          # Componentes React reutilizáveis
-├── pages/              # Páginas da aplicação
-├── styles/             # Arquivos de estilo CSS
-├── features/           # Especificações BDD (.feature)
-├── tests/              # Testes unitários
-├── next.config.js      # Configuração Next.js
-├── package.json        # Dependências do projeto
-└── README.md           # Este arquivo
-```
+- **Website:** [nation.fun](https://nation.fun)
+- **Discord:** [Join Community](https://discord.gg/nation)
+- **Twitter:** [@nationfun](https://twitter.com/nationfun)
+- **Email:** support@nation.fun
+- **Docs:** [Full Documentation](https://docs.nation.fun)
 
-## 🧪 Testes
+## 🎓 Learn More
 
-Execute os testes para garantir que tudo está funcionando corretamente:
+- [FAQ](./docs/reference/faq.md)
+- [Success Stories](./CASE_STUDIES.md)
+- [Blog](https://blog.nation.fun)
+- [Webinars](https://nation.fun/webinars)
 
-```bash
-# Testes unitários
-npm run test
+## 🤖 Example Agents
 
-# BDD com Gherkin
-npm run test:bdd
+### [Twitter Engagement Bot](./examples/basic-twitter-bot)
+Auto-reply to mentions, build community engagement
 
-# Cobertura de testes
-npm run test:coverage
-```
+### [Crypto Trading Bot](./examples/trading-bot)
+Monitor markets and execute trades 24/7
 
-## 🚢 Deploy
+### [Discord Moderator](./examples/discord-moderator)
+Moderate your community automatically
 
-O projeto está configurado para deploy automático via GitHub Pages:
+[See all examples →](./examples)
 
-```bash
-# Build para produção
-npm run build
+## 🆓 Pricing
 
-# Deploy
-npm run deploy
-```
+- **Free Tier:** 1 agent, 100 daily executions
+- **Pro:** $9/month - 5 agents, unlimited executions
+- **Enterprise:** Custom pricing for large deployments
 
-Acesse seu projeto em: [https://govinda777.github.io/nation.fun/](https://govinda777.github.io/nation.fun/)
+[View full pricing →](https://nation.fun/pricing)
 
-## 📖 Documentação
+## 🤝 Contributing
 
-Para uma visão detalhada da arquitetura, guias de instalação, e referência da API, **[acesse nossa documentação completa aqui](https://govinda777.github.io/nation.fun/)**.
+We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-## 🤝 Contribuindo
+## 📄 License
 
-Contribuições são bem-vindas! Para contribuir com o projeto:
+MIT License - see [LICENSE](./LICENSE)
 
-1. Faça um Fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona MinhaFeature'`)
-4. Push para a branch (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
+## 🚀 Ready to Build?
 
-Para mais detalhes, veja o [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## 📋 Código de Conduta
-
-Este projeto adota um Código de Conduta que todos os contribuidores devem seguir. Leia o [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) para mais informações.
-
-## 📄 Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE) - veja o arquivo LICENSE para detalhes.
-
-## 🎯 Roadmap
-
-- [ ] Autenticação de usuários
-- [ ] Dashboard avançado de agentes
-- [ ] Integração com mais plataformas
-- [ ] API REST completa
-- [ ] Documentação em vídeo
-
-## 📞 Suporte
-
-Tem dúvidas ou problemas? 
-
-- 📧 Abra uma [issue](https://github.com/govinda777/nation.fun/issues)
-- 💬 Participate das discussões
-- 📚 Consulte a [documentação](docs/)
-
-## 👤 Autor
-
-**Govinda** - [@govinda777](https://github.com/govinda777)
-
-## 🙏 Agradecimentos
-
-Agradeço a todos que contribuem, reportam bugs e sugerem melhorias para este projeto!
-
----
-
-<div align="center">
-
-Made with ❤️ by [govinda777](https://github.com/govinda777)
-
-[⬆ voltar ao topo](#nation.fun)
-
-</div>
+[Start Creating →](https://app.nation.fun/signup)

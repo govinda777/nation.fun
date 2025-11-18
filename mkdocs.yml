@@ -5,35 +5,23 @@ docs_dir: docs
 
 theme:
   name: material
+  palette:
+    scheme: slate
+    primary: black
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
 
 nav:
-  - 'Início': 'index.md'
-  - 'Introdução':
-    - 'O que é um Agente?': 'introduction/what-is-an-agent.md'
-    - 'Primeiros Passos': 'guides/getting-started.md'
-  - 'Skills do Agente':
-    - 'E-commerce': 'skills/ecommerce.md'
-    - 'Integração com GitHub': 'skills/integracao-github.md'
-    - 'Bot para X.com': 'skills/bot-para-x-com.md'
-    - 'Integração com WhatsApp': 'reference/whatsapp-integration.md'
-  - 'Arquitetura':
-    - 'Visão Geral': 'arquitetura/visao-geral.md'
-    - 'Infraestrutura como Código (IaC)': 'arquitetura/iac.md'
-  - 'Integrações':
-    - 'Canais de Comunicação': 'integrations/communication-channels.md'
-    - 'Ferramentas de Negócios': 'integrations/business-integrations.md'
-  - 'Inteligência de Diálogo':
-    - 'Fluxo de Atendimento': 'dialog-management/service-flow.md'
-    - 'Gestão de Diálogos': 'dialog-management/dialog-management.md'
-  - 'Segurança':
-    - 'Gerenciamento de Tokens': 'seguranca/gerenciamento-de-tokens.md'
-    - 'Proteção de Chaves e Segredos': 'seguranca/token-security.md'
-  - 'Web3':
-    - 'Introdução': 'web3/index.md'
-    - 'Onramp de Tokens (NATO)': 'web3/onramp.md'
-    - 'Carteiras Inteligentes e Custódia': 'web3/erc4337-e-custodia.md'
-    - 'Criação de Agentes e NFTs': 'web3/como-criar-agente.md'
-    - 'Como Funcinam as Taxas': 'web3/como-as-taxas-sao-cobradas.md'
-    - 'Restrições e Limites': 'web3/restricoes-e-limites.md'
-    - 'O Smart Contract de Taxas': 'web3/smart-contract-de-taxas.md'
-    - 'Transferindo Seus Ativos': 'web3/como-transferir-seus-ativos.md'
+  - 'Home': 'index.md'
+  - 'Getting Started': 'getting-started.md'
+  - 'User Guides':
+    - 'First Agent': 'user-guides/first-agent.md'
+    - 'Skills Overview': 'user-guides/skills-overview.md'
+    - 'Best Practices': 'user-guides/best-practices.md'
+  - 'API Reference':
+    - 'Overview': 'api/README.md'
+  - 'Tutorials': 'tutorials/README.md'
+  - 'Reference':
+    - 'FAQ': 'reference/faq.md'
