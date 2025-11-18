@@ -1,11 +1,15 @@
+<p align="center">
+  <img src="./public/banner.svg" alt="Nation.fun Banner">
+</p>
+
 # 🌐 Nation.fun - Build AI Agents in Minutes
 
 Site [vercel]: https://nationfun.vercel.app/
 Doc [git pages]: https://govinda777.github.io/nation.fun/
 
-[![Build Status](badge-url)]
-[![Users](badge-url)]
-[![License: MIT](badge-url)]
+[![CI/CD Pipeline](https://github.com/govinda777/nation.fun/actions/workflows/ci.yml/badge.svg)](https://github.com/govinda777/nation.fun/actions/workflows/ci.yml)
+[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=nationfun)](https://nationfun.vercel.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > The easiest way to create, deploy, and monetize autonomous AI agents. No coding required.
 
@@ -19,6 +23,14 @@ Doc [git pages]: https://govinda777.github.io/nation.fun/
 - **Data Analysis** - Automated reporting and insights
 
 ## ⚡ Quick Start (5 minutes)
+
+```mermaid
+graph TD
+    A["1. Sign Up at app.nation.fun"] --> B{"2. Choose a Template"};
+    B --> C["3. Configure Your Agent (Name, Skills, Rules)"];
+    C --> D["4. Deploy to Live Environment"];
+    D --> E["5. Monitor Performance & Earn Rewards"];
+```
 
 ### 1. Sign Up
 Visit [app.nation.fun](https://app.nation.fun) and create your account
@@ -49,6 +61,27 @@ Track performance and earn rewards
 
 ## 🔗 Technology Stack
 
+```mermaid
+graph LR
+    subgraph "User Interface"
+        A[Next.js + React]
+    end
+    subgraph "Infrastructure"
+        B[Vercel]
+    end
+    subgraph "Blockchain"
+        C[EVM Chains]
+        D[Base]
+        E[Ethereum]
+        F[Polygon]
+    end
+    A --> B
+    A --> C
+    C --> D
+    C --> E
+    C --> F
+```
+
 - **Frontend:** Next.js + React
 - **Blockchain:** EVM-compatible chains (Base, Ethereum, Polygon)
 - **Infrastructure:** Vercel
@@ -57,7 +90,7 @@ Track performance and earn rewards
 
 - [Getting Started Guide](./docs/getting-started.md)
 - [Create Your First Agent](./docs/user-guides/first-agent.md)
-- [API Reference](./docs/api/README.md)
+- [API Reference](./docs/api/)
 - [Best Practices](./docs/user-guides/best-practices.md)
 - [Tutorials](./docs/tutorials/)
 
@@ -78,16 +111,14 @@ Track performance and earn rewards
 
 ## 🤖 Example Agents
 
-### [Twitter Engagement Bot](./examples/basic-twitter-bot)
+### Twitter Engagement Bot
 Auto-reply to mentions, build community engagement
 
-### [Crypto Trading Bot](./examples/trading-bot)
+### Crypto Trading Bot
 Monitor markets and execute trades 24/7
 
-### [Discord Moderator](./examples/discord-moderator)
+### Discord Moderator
 Moderate your community automatically
-
-[See all examples →](./examples)
 
 ## 🆓 Pricing
 
