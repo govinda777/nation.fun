@@ -57,7 +57,9 @@ jobs:
 
       # Step 3: Combine docs and test report
       - name: Move test report into docs site directory
-        run: mv ./reports-artifact ./site/reports
+        run: |
+          mkdir -p ./site/reports
+          mv ./reports-artifact/* ./site/reports/
 
       # Step 4: Upload the combined site as a Pages artifact
       - name: Upload Pages artifact
