@@ -1,20 +1,38 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("dotenv/config");
+// Use um caminho absoluto para garantir que o .env.local seja sempre encontrado
+require("dotenv").config({ path: require("path").resolve(__dirname, "../.env.local") });
 
-const BASE_MAINNET_RPC_URL = process.env.BASE_MAINNET_RPC_URL || "https://mainnet.base.org";
+// Pega a chave privada do deployer do arquivo .env.local
+const deployerPrivateKey = process.env.HARDHAT_PRIVATE_KEY_DEPLOYER;
 
-// Only include accounts if a private key is provided
-const accounts = process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [];
+// Adiciona um log para depuração
+if (!deployerPrivateKey) {
+  console.warn("AVISO: HARDHAT_PRIVATE_KEY_DEPLOYER não encontrada no .env.local. Usando contas padrão do Hardhat.");
+}
+
+// Garante que a chave privada do deployer esteja disponível para a rede localhost.
+const accounts = deployerPrivateKey ? [deployerPrivateKey] : [];
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.28",
+  solidity: {
+    version: "0.8.28",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
+  },
   networks: {
-    hardhat: {},
-    base: {
-      url: BASE_MAINNET_RPC_URL,
+    hardhat: {
+      chainId: 31337,
+    },
+    localhost: {
+      url: "http://127.0.0.1:8545",
+      // Se a chave não for fornecida, o ethers usará as contas padrão do nó
       accounts: accounts,
-      chainId: 8453
-    }
-  }
+      chainId: 31337,
+    },
+  },
 };
