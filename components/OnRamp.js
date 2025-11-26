@@ -1,62 +1,75 @@
-import React, { useState } from 'react';
-import BuyEthStep from './BuyEthStep';
-import SwapNationStep from './SwapNationStep';
-import BuyNftStep from './BuyNftStep';
-
-// Define os passos da jornada on-ramp
-const STEPS = {
-  BUY_ETH: 'BUY_ETH',
-  SWAP_NATION: 'SWAP_NATION',
-  BUY_NFT: 'BUY_NFT',
-  COMPLETED: 'COMPLETED',
-};
+import React, { useState, useEffect } from 'react';
+import { usePrivy } from '@privy-io/react-auth';
+import { getProvider, getNatoTokenContract, swapUsdcToNato } from '../services/web3';
+import { ethers } from 'ethers';
+import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk';
 
 const OnRamp = () => {
-  const [currentStep, setCurrentStep] = useState(STEPS.BUY_ETH);
+  const { user } = usePrivy();
+  const [natoBalance, setNatoBalance] = useState('0');
+  const [usdcBalance, setUsdcBalance] = useState('0');
+  const [isSwapping, setIsSwapping] = useState(false);
 
-  const goToNextStep = () => {
-    switch (currentStep) {
-      case STEPS.BUY_ETH:
-        setCurrentStep(STEPS.SWAP_NATION);
-        break;
-      case STEPS.SWAP_NATION:
-        setCurrentStep(STEPS.BUY_NFT);
-        break;
-      case STEPS.BUY_NFT:
-        setCurrentStep(STEPS.COMPLETED);
-        break;
-      default:
-        break;
+  const fetchBalances = async () => {
+    if (user && user.wallet) {
+      const provider = getProvider();
+      const natoContract = getNatoTokenContract(provider);
+      const natoBalance = await natoContract.balanceOf(user.wallet.address);
+      setNatoBalance(ethers.formatUnits(natoBalance, 18));
+
+      const usdcAddress = '0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913';
+      const usdcContract = new ethers.Contract(usdcAddress, natoTokenAbi, provider);
+      const usdcBalance = await usdcContract.balanceOf(user.wallet.address);
+      setUsdcBalance(ethers.formatUnits(usdcBalance, 6)); // USDC has 6 decimals
     }
   };
 
-  const renderCurrentStep = () => {
-    switch (currentStep) {
-      case STEPS.BUY_ETH:
-        return <BuyEthStep onComplete={goToNextStep} />;
-      case STEPS.SWAP_NATION:
-        return <SwapNationStep onComplete={goToNextStep} />;
-      case STEPS.BUY_NFT:
-        return <BuyNftStep onComplete={goToNextStep} />;
-      case STEPS.COMPLETED:
-        return (
-          <div>
-            <h2>Parabéns!</h2>
-            <p>Você completou a jornada e está pronto para criar seu agente.</p>
-          </div>
-        );
-      default:
-        return <div>Carregando passo...</div>;
+  useEffect(() => {
+    fetchBalances();
+  }, [user]);
+
+  const handleOnRamp = () => {
+    if (user && user.wallet) {
+      new RampInstantSDK({
+        hostAppName: 'Nation.fun',
+        hostLogoUrl: 'https://nation.fun/logo.svg', // Replace with your actual logo URL
+        swapAsset: 'BASE_USDC',
+        userAddress: user.wallet.address,
+        hostApiKey: process.env.NEXT_PUBLIC_RAMP_API_KEY,
+      }).on('*', (event) => {
+        if (event.type === 'PURCHASE_SUCCESSFUL') {
+          fetchBalances();
+        }
+      }).show();
+    }
+  };
+
+  const handleSwap = async () => {
+    if (user && user.wallet) {
+      setIsSwapping(true);
+      try {
+        const provider = getProvider();
+        const signer = provider.getSigner();
+        const usdcAmount = ethers.parseUnits(usdcBalance, 6);
+        await swapUsdcToNato(signer, usdcAmount);
+        fetchBalances();
+      } catch (error) {
+        console.error('Swap failed:', error);
+      } finally {
+        setIsSwapping(false);
+      }
     }
   };
 
   return (
-    <div className="onramp-container">
-      <h1>Crie seu Agente</h1>
-      <p>Siga os passos abaixo para adquirir os recursos necessários.</p>
-      <div className="step-content">
-        {renderCurrentStep()}
-      </div>
+    <div>
+      <h3>Comprar NATO</h3>
+      <p>Seu saldo de USDC: {usdcBalance}</p>
+      <p>Seu saldo de NATO: {natoBalance}</p>
+      <button onClick={handleOnRamp}>Comprar USDC com Pix</button>
+      <button onClick={handleSwap} disabled={isSwapping || parseFloat(usdcBalance) === 0}>
+        {isSwapping ? 'Trocando...' : 'Trocar USDC para NATO'}
+      </button>
     </div>
   );
 };
