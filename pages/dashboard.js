@@ -8,7 +8,7 @@ export default function Dashboard() {
   const router = useRouter();
   const { ready, authenticated } = usePrivy();
   const { wallets } = useWallets();
-  const wallet = wallets[0];
+  const wallet = wallets && wallets.length > 0 ? wallets[0] : null;
 
   useEffect(() => {
     if (ready && !authenticated) {
@@ -28,13 +28,15 @@ export default function Dashboard() {
       <DashboardLayout>
         <h2>Dashboard</h2>
         <p>Bem-vindo de volta!</p>
-        {wallet && (
+        {wallet ? (
           <div className="wallet-info">
             <h3>Sua Carteira</h3>
             <p className="wallet-address-full">
               {wallet.address}
             </p>
           </div>
+        ) : (
+          <p>Buscando seus ativos na blockchain...</p>
         )}
       </DashboardLayout>
     </>
