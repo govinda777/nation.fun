@@ -1,5 +1,6 @@
 import '../styles/style.css';
 import '../styles/WalletAssets.css';
+import '../styles/OnRamp.css';
 import { PrivyProvider } from '@privy-io/react-auth';
 
 function MyApp({ Component, pageProps }) {
