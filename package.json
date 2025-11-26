@@ -22,6 +22,7 @@
     "axios": "^1.6.0",
     "ethers": "^6.15.0",
     "next": "^14.0.0",
+    "opensea-js": "^8.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "userop": "^0.4.0-beta.5"

@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
 import { ethers } from 'ethers';
 
-// Contract addresses for Base network
 const UNISWAP_V2_ROUTER_ADDRESS = "0x4752ba5dbc23f44d87826276bf6fd6b1c372ad24";
-const WETH_ADDRESS = "0x4200000000000000000000000000000000000006"; // WETH on Base
+const WETH_ADDRESS = "0x4200000000000000000000000000000000000006";
 const NATION_ADDRESS = process.env.NEXT_PUBLIC_NATION_TOKEN_CONTRACT_ADDRESS;
 
 const uniswapV2RouterAbi = [
@@ -46,30 +45,19 @@ const SwapNationStep = ({ onComplete }) => {
   const handleSwap = async () => {
     if (!user?.wallet || !provider || !swapAmount || !NATION_ADDRESS) return;
     setIsSwapping(true);
-
     try {
       const signer = await provider.getSigner();
       const router = new ethers.Contract(UNISWAP_V2_ROUTER_ADDRESS, uniswapV2RouterAbi, signer);
-
       const amountIn = ethers.parseEther(swapAmount);
       const path = [WETH_ADDRESS, NATION_ADDRESS];
-      const deadline = Math.floor(Date.now() / 1000) + 60 * 20; // 20 minutes
-
-      const tx = await router.swapExactETHForTokens(
-        0, // amountOutMin, 0 for no minimum
-        path,
-        user.wallet.address,
-        deadline,
-        { value: amountIn }
-      );
-
+      const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
+      const tx = await router.swapExactETHForTokens(0, path, user.wallet.address, deadline, { value: amountIn });
       await tx.wait();
       await fetchBalances();
       onComplete();
-
     } catch (error) {
       console.error('Swap failed:', error);
-      alert('A troca falhou. Por favor, verifique o console para mais detalhes.');
+      alert('A troca falhou.');
     } finally {
       setIsSwapping(false);
     }
@@ -80,7 +68,6 @@ const SwapNationStep = ({ onComplete }) => {
       <h2>Passo 2: Trocar ETH por $NATION</h2>
       <p>Seu saldo de ETH: {parseFloat(ethBalance).toFixed(4)}</p>
       <p>Seu saldo de $NATION: {parseFloat(nationBalance).toFixed(2)}</p>
-
       <input
         type="number"
         value={swapAmount}
@@ -88,15 +75,12 @@ const SwapNationStep = ({ onComplete }) => {
         placeholder="Quantidade de ETH para trocar"
         disabled={!provider}
       />
-
       <button onClick={handleSwap} disabled={isSwapping || !swapAmount || !provider}>
         {isSwapping ? 'Trocando...' : 'Trocar'}
       </button>
-
       <button onClick={onComplete} style={{marginTop: '10px'}}>
         Pular (Já tenho $NATION)
       </button>
-
       {!provider && <p>Conectando à sua carteira...</p>}
     </div>
   );
