@@ -27,8 +27,10 @@ profile.cov
 go.work
 go.work.sum
 
-# env file
-.env
+# Environment variables
+# Ignore all .env files, but keep .env.example
+.env*
+!.env.example
 
 # Editor/IDE
 # .idea/
