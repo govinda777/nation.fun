@@ -7,7 +7,7 @@ const deployerPrivateKey = process.env.HARDHAT_PRIVATE_KEY_DEPLOYER;
 
 // Adiciona um log para depuração
 if (!deployerPrivateKey) {
-  console.warn("AVISO: não encontrada no .env.local. Usando contas padrão do Hardhat.");
+  console.warn("AVISO: HARDHAT_PRIVATE_KEY_DEPLOYER não encontrada no .env.local. Usando contas padrão do Hardhat.");
 }
 
 // Garante que a chave privada do deployer esteja disponível para a rede localhost.
