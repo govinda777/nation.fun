@@ -8,6 +8,7 @@ const erc20Abi = [
   "function symbol() view returns (string)",
   "function balanceOf(address) view returns (uint256)",
   "function decimals() view returns (uint8)",
+  "function approve(address spender, uint256 amount) returns (bool)",
 ];
 
 const erc721Abi = [
@@ -18,11 +19,18 @@ const erc721Abi = [
   "function tokenURI(uint256 tokenId) view returns (string)",
 ];
 
+const uniswapV2RouterAbi = [
+    "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)"
+];
+
 // --- Configuração a partir de Variáveis de Ambiente ---
 const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL || 'http://127.0.0.1:8545';
 const natoTokenAddress = process.env.NEXT_PUBLIC_NATO_TOKEN_ADDRESS;
 const goviCoinAddress = process.env.NEXT_PUBLIC_GOVI_COIN_ADDRESS;
 const nftCollectionAddress = process.env.NEXT_PUBLIC_NFT_COLLECTION_ADDRESS;
+const uniswapV2RouterAddress = "0x1689E7B1F10000AE47eBfE339a4f69dECd19F602"; // Endereço Fixo (Pode ser movido para .env se necessário)
+const usdcAddress = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913"; // Endereço Fixo (Pode ser movido para .env se necessário)
+
 
 // Interface para decodificar chamadas de transferência ERC20
 const erc20Interface = new ethers.Interface(erc20Abi);
@@ -37,6 +45,8 @@ export const getProvider = (signer) => {
   return new ethers.JsonRpcProvider(rpcUrl);
 };
 
+// --- Funções para o Dashboard ---
+
 const getEthBalance = async (provider, address) => {
   try {
     const balance = await provider.getBalance(address);
@@ -48,7 +58,6 @@ const getEthBalance = async (provider, address) => {
 };
 
 const getTokenBalance = async (provider, tokenAddress, userAddress) => {
-  // ... (mesma implementação de antes)
   if (!tokenAddress) return null;
   try {
     const contract = new ethers.Contract(tokenAddress, erc20Abi, provider);
@@ -66,7 +75,6 @@ const getTokenBalance = async (provider, tokenAddress, userAddress) => {
 };
 
 const getOnChainUserNfts = async (provider, userAddress) => {
-  // ... (mesma implementação de antes)
   if (!nftCollectionAddress) return [];
   try {
     const contract = new ethers.Contract(nftCollectionAddress, erc721Abi, provider);
@@ -92,53 +100,35 @@ const getOnChainUserNfts = async (provider, userAddress) => {
   }
 };
 
-/**
- * Busca as transações recentes de um usuário na blockchain.
- * @param {ethers.Provider} provider - A instância do provedor ethers.
- * @param {string} userAddress - O endereço da carteira do usuário.
- * @returns {Promise<Array<object>>} Uma lista de transações formatadas.
- */
 const getOnChainRecentTransactions = async (provider, userAddress) => {
+  // ... (implementação anterior)
   try {
     const blockNumber = await provider.getBlockNumber();
     const transactions = [];
     const userAddrLower = userAddress.toLowerCase();
-
-    // Escaneia os últimos 50 blocos
     const startBlock = Math.max(0, blockNumber - 50);
-
     for (let i = blockNumber; i > startBlock; i--) {
-      const block = await provider.getBlock(i, true); // true para pré-buscar transações
+      const block = await provider.getBlock(i, true);
       if (!block) continue;
-
       for (const tx of block.prefetchedTransactions) {
-        if (transactions.length >= 5) break; // Limita a 5 transações
-
+        if (transactions.length >= 5) break;
         const from = tx.from?.toLowerCase();
         const to = tx.to?.toLowerCase();
-
         if (from === userAddrLower || to === userAddrLower) {
           let description = `Transação Genérica`;
           let value = `${ethers.formatEther(tx.value)} ETH`;
           const direction = from === userAddrLower ? 'Enviou' : 'Recebeu';
-
-          // Checa se é uma transferência de token ERC20
-          if (tx.data.startsWith('0xa9059cbb')) { // Seletor da função transfer()
+          if (tx.data.startsWith('0xa9059cbb')) {
             try {
               const decoded = erc20Interface.parseTransaction({ data: tx.data });
-              const tokenAmount = ethers.formatUnits(decoded.args[1], 18); // Assumindo 18 decimais
-              description = `${direction} Token`; // Idealmente, buscaríamos o símbolo do token
+              const tokenAmount = ethers.formatUnits(decoded.args[1], 18);
+              description = `${direction} Token`;
               value = `${tokenAmount}`;
-            } catch (e) { /* ignora se não for decodificável */ }
+            } catch (e) { /* ignora */ }
           } else {
              description = `${direction} ETH`;
           }
-
-          transactions.push({
-            hash: tx.hash,
-            description: description,
-            value: `${from === userAddrLower ? '-' : '+'}${value}`,
-          });
+          transactions.push({ hash: tx.hash, description, value: `${from === userAddrLower ? '-' : '+'}${value}` });
         }
       }
       if (transactions.length >= 5) break;
@@ -150,14 +140,10 @@ const getOnChainRecentTransactions = async (provider, userAddress) => {
   }
 };
 
-// --- Função Principal ---
-
 export const getUserAssets = async (signer) => {
   if (!signer) throw new Error("Signer (carteira) é necessário para buscar os ativos.");
-
   const provider = getProvider(signer);
   const userAddress = await signer.getAddress();
-
   const [ethBalance, natoBalance, goviBalance, nfts, transactions] = await Promise.all([
     getEthBalance(provider, userAddress),
     getTokenBalance(provider, natoTokenAddress, userAddress),
@@ -165,11 +151,44 @@ export const getUserAssets = async (signer) => {
     getOnChainUserNfts(provider, userAddress),
     getOnChainRecentTransactions(provider, userAddress),
   ]);
+  return { eth: ethBalance, tokens: [natoBalance, goviBalance].filter(Boolean), nfts, transactions };
+};
 
-  return {
-    eth: ethBalance,
-    tokens: [natoBalance, goviBalance].filter(Boolean),
-    nfts,
-    transactions,
-  };
+// --- Funções Reintroduzidas para o OnRamp ---
+
+/**
+ * @deprecated Use `new ethers.Contract(natoTokenAddress, erc20Abi, signerOrProvider)` diretamente.
+ * Retorna uma instância do contrato NatoToken.
+ */
+export const getNatoTokenContract = (signerOrProvider) => {
+  return new ethers.Contract(natoTokenAddress, erc20Abi, signerOrProvider);
+};
+
+/**
+ * Troca USDC por NATO usando o Uniswap V2 Router.
+ * @param {ethers.Signer} signer - O signer da carteira do usuário.
+ * @param {ethers.BigNumberish} usdcAmount - A quantidade de USDC a ser trocada.
+ */
+export const swapUsdcToNato = async (signer, usdcAmount) => {
+  const usdcContract = new ethers.Contract(usdcAddress, erc20Abi, signer);
+  const routerContract = new ethers.Contract(uniswapV2RouterAddress, uniswapV2RouterAbi, signer);
+  const userAddress = await signer.getAddress();
+
+  // 1. Aprovar o Router para gastar USDC
+  const approveTx = await usdcContract.approve(uniswapV2RouterAddress, usdcAmount);
+  await approveTx.wait();
+
+  // 2. Executar a troca
+  const deadline = Math.floor(Date.now() / 1000) + 60 * 20; // 20 minutos a partir de agora
+  const swapTx = await routerContract.swapExactTokensForTokens(
+    usdcAmount,
+    0, // amountOutMin: aceita qualquer quantidade de NATO
+    [usdcAddress, natoTokenAddress],
+    userAddress,
+    deadline
+  );
+
+  const receipt = await swapTx.wait();
+  console.log("Troca concluída:", receipt.hash);
+  return receipt;
 };
