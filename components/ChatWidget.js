@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function ChatWidget() {
+export default function ChatWidget({ initialMessage }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+
+  useEffect(() => {
+    if (initialMessage) {
+      setMessages([{ role: 'assistant', content: initialMessage }]);
+    }
+  }, [initialMessage]);
 
   const sendMessage = async () => {
     if (input.trim() === '') return;

@@ -76,7 +76,7 @@ export default function Dashboard() {
   const router = useRouter();
   const { ready, authenticated } = usePrivy();
   const { wallets } = useWallets();
-  const wallet = wallets[0];
+  const wallet = wallets && wallets.length > 0 ? wallets[0] : null;
 
   const [assets, setAssets] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -121,25 +121,17 @@ export default function Dashboard() {
         <title>Dashboard - Nation.fun</title>
       </Head>
       <DashboardLayout>
-        <div className="dashboard-header">
-          <h2>Dashboard</h2>
-          <p>Bem-vindo de volta!</p>
-        </div>
-
-        {loading && <p>Buscando seus ativos na blockchain...</p>}
-        {error && <p className="error-message">{error}</p>}
-
-        {assets && (
-          <div className="assets-grid">
-            <div className="main-column">
-              <AssetBalances eth={assets.eth} tokens={assets.tokens} />
-              <TransactionHistory transactions={assets.transactions} />
-            </div>
-            <div className="side-column">
-              <WalletInfo wallet={wallet} />
-              <NftGallery nfts={assets.nfts} />
-            </div>
+        <h2>Dashboard</h2>
+        <p>Bem-vindo de volta!</p>
+        {wallet ? (
+          <div className="wallet-info">
+            <h3>Sua Carteira</h3>
+            <p className="wallet-address-full">
+              {wallet.address}
+            </p>
           </div>
+        ) : (
+          <p>Buscando seus ativos na blockchain...</p>
         )}
       </DashboardLayout>
     </>
