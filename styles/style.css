@@ -89,6 +89,70 @@ h1, h2, h3 {
   color: var(--background-color);
 }
 
+/* Agents Table Styles */
+.agents-table-container {
+  margin-top: 30px;
+  border: 2px solid var(--atari-blue);
+  padding: 10px;
+  background-color: #1a1a1a;
+}
+
+.agents-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.agents-table th,
+.agents-table td {
+  border: 2px solid var(--atari-yellow);
+  padding: 15px;
+  text-align: left;
+}
+
+.agents-table th {
+  background-color: var(--atari-blue);
+  color: var(--atari-white);
+  font-size: 16px;
+}
+
+.agents-table td {
+  font-size: 14px;
+}
+
+.agents-table .btn-primary {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: var(--atari-green);
+  color: var(--background-color);
+  border: 2px solid var(--atari-green);
+  text-decoration: none;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.agents-table .btn-primary:hover {
+  background-color: var(--atari-yellow);
+  border-color: var(--atari-yellow);
+  color: var(--background-color);
+}
+
+/* Chat Page Styles */
+.chat-page-widget-container {
+  margin-top: 20px;
+  height: 60vh; /* Adjust height as needed */
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-page-widget-container #chat-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  right: 0;
+}
+
 /* Dashboard Layout Styles */
 .dashboard-wrapper {
   display: flex;
@@ -114,12 +178,26 @@ h1, h2, h3 {
   gap: 10px;
 }
 
-.sidebar-link-active {
+.sidebar-link, .sidebar-link-active {
   padding: 10px;
   text-decoration: none;
+  border: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-link {
+  color: var(--atari-white);
+}
+
+.sidebar-link:hover {
+  border-color: var(--atari-yellow);
+  color: var(--atari-yellow);
+}
+
+.sidebar-link-active {
   color: var(--background-color);
   background-color: var(--atari-green);
-  border: 2px solid var(--atari-green);
+  border-color: var(--atari-green);
 }
 
 .main-content {
