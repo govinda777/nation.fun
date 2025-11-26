@@ -1,11 +1,11 @@
-import { Given, When, Then } from '@cucumber/cucumber';
-import assert from 'assert';
-import sinon from 'sinon';
-import nock from 'nock';
+const { Given, When, Then } = require('@cucumber/cucumber');
+const assert = require('assert');
+const sinon = require('sinon');
+const nock = require('nock');
 
 // Mock dependencies
-import { processWhatsAppMessage } from '../../services/whatsapp/message-processor.js';
-import webhookHandler from '../../services/whatsapp/webhook-handler.js';
+const { processWhatsAppMessage } = require('../../services/whatsapp/message-processor.js');
+const webhookHandler = require('../../services/whatsapp/webhook-handler.js');
 
 let from, messageBody;
 let mockWhatsAppClient, mockAgentOrchestrator;
