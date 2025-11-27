@@ -26,8 +26,8 @@ concurrency:
 jobs:
   # Single job to build, combine, and deploy
   deploy:
-    # Check that the triggering workflow run was successful
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # Check that the triggering workflow run was successful and was triggered by a push event
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

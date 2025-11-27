@@ -4,6 +4,7 @@ import Link from 'next/link';
 export default function Header() {
   const { authenticated, login, logout } = usePrivy();
   const { wallets } = useWallets();
+  const wallet = wallets[0];
 
   return (
     <header className="container header-container">
@@ -12,16 +13,18 @@ export default function Header() {
         <h1 className="logo-text">Nation.fun</h1>
       </Link>
       <nav>
-        {authenticated && wallets.length > 0 ? (
+        {authenticated ? (
           <div className="nav-authenticated">
             <Link href="/dashboard" className="btn-secondary">Dashboard</Link>
-            <div className="wallet-address">
-              {wallets[0].address.slice(0, 6)}...{wallets[0].address.slice(-4)}
-            </div>
+            {wallet && (
+              <div className="wallet-address">
+                {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
+              </div>
+            )}
             <button onClick={logout} className="btn-secondary">Logout</button>
           </div>
         ) : (
-          <button onClick={login} className="btn">Conectar Carteira</button>
+          <button onClick={login} className="btn">Login</button>
         )}
       </nav>
     </header>

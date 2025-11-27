@@ -1,0 +1,18 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignore": ["hardhat/**"],
+  "paths": {
+    "services/*": ["services/*"]
+  },
+  "next": {
+    "entry": [
+      "next.config.js",
+      "{pages,app}/**/*.{js,jsx,ts,tsx}",
+      "middleware.js",
+      "src/{pages,app}/**/*.{js,jsx,ts,tsx}",
+      "src/middleware.js",
+      "instrumentation.js",
+      "src/instrumentation.js"
+    ]
+  }
+}
