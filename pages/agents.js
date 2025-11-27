@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import DashboardLayout from '../components/DashboardLayout';
 import Head from 'next/head';
-import Link from 'next/link';
+import AgentRow from '../components/AgentRow';
 
 const agents = [
   {
@@ -73,16 +73,7 @@ export default function AgentsPage() {
             </thead>
             <tbody>
               {agents.map((agent) => (
-                <tr key={agent.name}>
-                  <td>{agent.name}</td>
-                  <td>{agent.description}</td>
-                  <td>{agent.skills.join(', ')}</td>
-                  <td>
-                    <Link href={`/chat?prompt=${encodeURIComponent(agent.prompt)}`} passHref>
-                      <button className="btn-primary">Falar com o Agente</button>
-                    </Link>
-                  </td>
-                </tr>
+                <AgentRow key={agent.name} agent={agent} />
               ))}
             </tbody>
           </table>

@@ -78,10 +78,6 @@ export default function Dashboard() {
   const { wallets } = useWallets();
   const wallet = wallets && wallets.length > 0 ? wallets[0] : null;
 
-  const [assets, setAssets] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   useEffect(() => {
     if (ready && !authenticated) {
       router.push('/');
