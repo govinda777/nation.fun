@@ -58,3 +58,4 @@ site/
 
 # General cache directories
 **/.cache/
+reports/
