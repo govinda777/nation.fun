@@ -13,6 +13,7 @@
     "prepare": "husky",
     "test:e2e": "npm run build && start-server-and-test 'npm start' http://localhost:3000 'npm run test:bdd'",
     "generate-report": "node generate-report.js",
+    "agents:sync": "tsx scripts/sync-agents.ts",
     "knip": "knip"
   },
   "lint-staged": {
@@ -39,6 +40,7 @@
     "lint-staged": "^16.2.7",
     "nock": "^13.3.0",
     "sinon": "^15.0.0",
-    "start-server-and-test": "^2.1.2"
+    "start-server-and-test": "^2.1.2",
+    "tsx": "^4.20.6"
   }
 }
