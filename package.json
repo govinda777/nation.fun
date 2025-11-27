@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "test:bdd": "cucumber-js features/e2e --format json:reports/cucumber_report.json",
+    "test:bdd": "cucumber-js features/e2e --require features/step_definitions/authentication_steps.cjs --format json:reports/cucumber_report.json",
     "test:coverage": "jest --coverage",
     "prepare": "husky",
     "test:e2e": "npm run build && start-server-and-test 'npm start' http://localhost:3000 'npm run test:bdd'",
