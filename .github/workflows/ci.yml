@@ -29,6 +29,9 @@ jobs:
       - name: Build the project
         run: npm run build
 
+      - name: Create report directory
+        run: mkdir -p reports
+
       - name: Run BDD tests
         # Use the test:e2e script to ensure server is built and running
         run: npm run test:e2e
