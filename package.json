@@ -11,7 +11,7 @@
     "test:bdd": "cucumber-js features/e2e --format json:reports/cucumber_report.json",
     "test:coverage": "jest --coverage",
     "prepare": "husky",
-    "test:e2e": "npm run build && WAIT_ON_TIMEOUT=60 start-server-and-test 'npm start' http://localhost:3000 'npm run test:bdd'",
+    "test:e2e": "npm run build && TOKEN_NATION=test NATION_API_URL=test WHATSAPP_VERIFY_TOKEN=test WHATSAPP_PHONE_ID=test WHATSAPP_ACCESS_TOKEN=test WHATSAPP_APP_SECRET=test WAIT_ON_TIMEOUT=60 start-server-and-test 'npm start' http://localhost:3000 'npm run test:bdd'",
     "generate-report": "node generate-report.js",
     "knip": "knip"
   },
