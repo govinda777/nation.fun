@@ -29,6 +29,9 @@ jobs:
       - name: Build the project
         run: npm run build
 
+      - name: Create report directory
+        run: mkdir -p reports
+
       - name: Run BDD tests
         # Use the test:e2e script to ensure server is built and running
         run: npm run test:e2e
@@ -39,10 +42,12 @@ jobs:
 
       - name: Generate HTML report
         # Only generate report on push events to the main branch after tests succeed
+        if: github.event_name == 'push'
         run: npm run generate-report
 
       - name: Upload Test Report artifact
         # Only upload artifact on push events to the main branch
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: test-report # Name of the artifact
