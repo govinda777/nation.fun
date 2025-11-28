@@ -86,6 +86,12 @@ graph LR
 - **Blockchain:** EVM-compatible chains (Base, Ethereum, Polygon)
 - **Infrastructure:** Vercel
 
+## 🧩 Microfrontend Architecture
+
+This project uses Module Federation to expose components that can be dynamically loaded and used by other applications. This allows for a more scalable and maintainable frontend architecture.
+
+For a detailed guide on how to integrate these components, please see the [**Microfrontend Documentation**](./docs/MICROFRONTEND.md).
+
 ## 📖 Full Documentation
 
 - [Getting Started Guide](./docs/getting-started.md)

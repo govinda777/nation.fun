@@ -28,7 +28,7 @@ export async function loadLocalAgentDefinitions(): Promise<AgentFile[]> {
 
           // Find the exported agent definition object in the module
           const agentDefinition = Object.values(module).find(
-            (exported) => typeof exported === 'object' && exported.id && exported.version
+            (exported: any) => typeof exported === 'object' && exported.id && exported.version
           ) as AgentDefinition | undefined;
 
           if (agentDefinition) {
