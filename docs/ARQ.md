@@ -20,7 +20,6 @@
 9. [Performance & Otimizações](#performance--otimizações)
 10. [DevOps & CI/CD](#devops--cicd)
 11. [Testes & Qualidade](#testes--qualidade)
-12. [Documentação API](#documentação-api)
 
 ---
 
@@ -37,87 +36,58 @@ O **nation.fun** é uma aplicação web moderna que integra com a plataforma Nat
 - Compliance com padrões de segurança OWASP
 
 ### KPIs & Objetivos
-```
-Performance:
-├─ Tempo de resposta API: < 500ms (p95)
-├─ Latência de chat: < 1s (p95)
-├─ Uptime: 99.9%
-└─ Score Lighthouse: >= 90
 
-Segurança:
-├─ Zero exposição de tokens
-├─ Rate limiting: 10 req/min por IP
-├─ Audit logging: 100% das operações
-└─ OWASP A01:2021 Compliance
+**Performance:**
+- Tempo de resposta API: < 500ms (p95)
+- Latência de chat: < 1s (p95)
+- Uptime: 99.9%
+- Score Lighthouse: >= 90
 
-Escalabilidade:
-├─ Suportar 1000 req/s concurrent
-├─ Auto-scaling automático
-├─ Database connections pooled
-└─ Cache multi-layer
-```
+**Segurança:**
+- Zero exposição de tokens
+- Rate limiting: 10 req/min por IP
+- Audit logging: 100% das operações
+- OWASP A01:2021 Compliance
+
+**Escalabilidade:**
+- Suportar 1000 req/s concurrent
+- Auto-scaling automático
+- Database connections pooled
+- Cache multi-layer
 
 ---
 
 ## 🏛️ Arquitetura Macro
 
-### Diagrama Arquitetural (Completo)
+### Fluxo de Chat (End-to-End)
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                      CAMADA DE APRESENTAÇÃO (Browser)            │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                   │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │ React App (Next.js Frontend)                            │   │
-│  ├──────────────────────────────────────────────────────────┤   │
-│  │ • Components/ - Componentes React reutilizáveis         │   │
-│  │ • Hooks/ - Custom hooks para lógica de negócio          │   │
-│  │ • Stores/ - State management (Zustand/Redux)            │   │
-│  │ • utils/ - Funções utilitárias                          │   │
-│  │ • styles/ - CSS/Tailwind                                │   │
-│  │                                                          │   │
-│  │ ✅ SEM credenciais de API                               │   │
-│  │ ✅ SEM tokens sensíveis                                 │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                            ▲                                      │
-│                            │ HTTPS                                │
-│                            ▼                                      │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │ API Client (`/lib/api-client.ts`)                       │   │
-│  ├──────────────────────────────────────────────────────────┤   │
-│  │ • Chamadas para /api/chat (sem token)                   │   │
-│  │ • Retry logic & backoff exponencial                     │   │
-│  │ • Error handling & user feedback                        │   │
-│  │ • Request/Response interceptors                         │   │
-│  └──────────────────────────────────────────────────────────┘   │
-└──────────────────────────────┬──────────────────────────────────┘\n                               │ POST /api/chat\n                               │ { message: string }\n                               ▼\n┌──────────────────────────────────────────────────────────────────┐\n│                 CAMADA DE API GATEWAY (Backend)                  │\n├──────────────────────────────────────────────────────────────────┤\n│                                                                   │\n│  ┌──────────────────────────────────────────────────────────┐   │\n│  │ Next.js API Routes (Vercel Serverless)                  │   │\n│  ├──────────────────────────────────────────────────────────┤   │\n│  │ /api/chat/route.ts                                       │   │\n│  │ ├─ Validação de request (headers, body)                │   │\n│  │ ├─ Authentication & Authorization                      │   │\n│  │ ├─ Rate limiting (token bucket algorithm)              │   │\n│  │ ├─ Input sanitization                                  │   │\n│  │ ├─ Chamada segura ao Nation com token protegido         │   │\n│  │ ├─ Processing de resposta                              │   │\n│  │ ├─ Audit logging (timestamp, IP, action)               │   │\n│  │ └─ Error handling & observability                      │   │\n│  │                                                          │   │\n│  │ 🔐 process.env.NATION_TOKEN (SEM exposição)            │   │\n│  └──────────────────────────────────────────────────────────┘   │\n│                            ▲                                      │\n│                            │ HTTPS (B2B)                          │\n│                            ▼                                      │\n│  ┌──────────────────────────────────────────────────────────┐   │\n│  │ Middleware & Utilities                                  │   │\n│  ├──────────────────────────────────────────────────────────┤   │\n│  │ • Auth middleware (validação de origem)                │   │\n│  │ • Rate limiter (Redis ou in-memory)                    │   │\n│  │ • Logger (estruturado, ELK stack)                      │   │\n│  │ • Metrics collector (Prometheus format)                │   │\n│  │ • Error tracker (Sentry integration)                   │   │\n│  └──────────────────────────────────────────────────────────┘   │\n└──────────────────────────────┬──────────────────────────────────┘\n                               │ HTTPS (Backend-to-Backend)\n                               │ Authorization: Bearer NATION_TOKEN\n                               ▼\n┌──────────────────────────────────────────────────────────────────┐\n│               CAMADA DE SERVIÇOS EXTERNOS                         │\n├──────────────────────────────────────────────────────────────────┤\n│                                                                   │\n│  ┌──────────────────────┐  ┌──────────────────────┐             │\n│  │  Nation API          │  │  Observability       │             │\n│  ├──────────────────────┤  ├──────────────────────┤             │\n│  │ • Chat endpoint      │  │ • Sentry (errors)   │             │\n│  │ • Auth validation    │  │ • Datadog (metrics) │             │\n│  │ • Context management │  │ • ELK (logs)        │             │\n│  │ • Rate limits (ext)  │  │ • Grafana (dashboards)           │\n│  └──────────────────────┘  └──────────────────────┘             │\n│                                                                   │\n└──────────────────────────────────────────────────────────────────┘\n```
-
-### Componentes por Camada
-
-**🎨 Presentation Layer (Frontend)**
-- React Components com TypeScript
-- Zustand/Redux para state management
-- React Query para data fetching
-- Tailwind CSS + custom themes
-
-**🔐 Security Layer (Middleware)**
-- JWT validation (se aplicável)
-- CORS policy enforcement
-- Rate limiting (token bucket)
-- Input validation & sanitization
-
-**⚙️ Business Logic Layer (API Routes)**
-- Orchestração de requisições
-- Processamento de dados
-- Cache management
-- Error handling
-
-**🌐 Integration Layer (External APIs)**
-- Nation API client
-- Observability providers
-- Database connections
-- File storage services
+User Input (Frontend)
+    ↓
+React Component (Validação)
+    ↓
+useChat Hook (State Management - Zustand)
+    ↓
+API Client (POST /api/chat - SEM token)
+    ↓
+Backend Gateway (Vercel Function)
+├─ Validação de Request (Zod)
+├─ Rate Limiting Check (10 req/min)
+├─ Input Sanitization
+└─ Chamada Nation API (token em process.env)
+    ↓
+Nation API (Backend-to-Backend, HTTPS)
+    ↓
+Backend Gateway (Processa Resposta)
+    ↓
+API Response 200 OK (SEM token exposto)
+    ↓
+useChat Hook (Atualiza Zustand Store)
+    ↓
+UI Re-render (MessageList)
+    ↓
+User Sees Response ✅
+```
 
 ---
 
@@ -125,29 +95,308 @@ Escalabilidade:
 
 ```
 nation-fun/
+├── app/                                # Next.js App Router
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── api/
+│   │   ├── chat/
+│   │   │   └── route.ts               # 🔐 POST /api/chat endpoint
+│   │   ├── auth/
+│   │   │   └── route.ts
+│   │   └── health/
+│   │       └── route.ts
+│   ├── (dashboard)/
+│   │   ├── chat/
+│   │   │   └── page.tsx
+│   │   ├── settings/
+│   │   └── history/
+│   └── error.tsx
 │
-├── 📂 app/                                 # Next.js App Router
-│   ├── 📄 layout.tsx                      # Root layout com providers
-│   ├── 📄 page.tsx                        # Página inicial
-│   ├── 📄 globals.css                     # Estilos globais
-│   ├── 📂 (auth)/                         # Grupo de rotas auth (layout privado)
-│   │   ├── 📂 login/
-│   │   │   └── 📄 page.tsx
-│   │   └── 📂 register/
-│   │       └── 📄 page.tsx
-│   │
-│   ├── 📂 (dashboard)/                    # Grupo de rotas dashboard (protegido)
-│   │   ├── 📂 chat/
-│   │   │   ├── 📄 page.tsx               # Chat interface
-│   │   │   └── 📂 [conversationId]/
-│   │   │       └── 📄 page.tsx           # Conversa individual\n│   │   ├── 📂 settings/\n│   │   │   └── 📄 page.tsx               # Configurações do usuário\n│   │   └── 📂 history/\n│   │       └── 📄 page.tsx               # Histórico de chats\n│   │\n│   ├── 📂 api/                            # API Routes (Backend)\n│   │   ├── 📂 chat/\n│   │   │   └── 📄 route.ts               # POST /api/chat (main endpoint)\n│   │   │\n│   │   ├── 📂 auth/\n│   │   │   ├── 📄 route.ts               # Auth operations\n│   │   │   └── 📂 [...nextauth]/\n│   │   │       └── 📄 route.ts           # NextAuth.js handler\n│   │   │\n│   │   ├── 📂 health/\n│   │   │   └── 📄 route.ts               # Health check\n│   │   │\n│   │   └── 📂 admin/\n│   │       └── 📄 route.ts               # Admin operations (protegido)\n│   │\n│   ├── 📂 error.tsx                      # Error page\n│   ├── 📂 loading.tsx                    # Loading skeleton\n│   └── 📂 not-found.tsx                  # 404 page\n│\n├── 📂 components/                         # React Components (reutilizáveis)\n│   ├── 📂 ui/                            # UI base components\n│   │   ├── Button.tsx\n│   │   ├── Input.tsx\n│   │   ├── Card.tsx\n│   │   ├── Modal.tsx\n│   │   └── ...\n│   │\n│   ├── 📂 chat/                          # Chat-specific components\n│   │   ├── ChatWindow.tsx\n│   │   ├── MessageList.tsx\n│   │   ├── InputArea.tsx\n│   │   └── MessageBubble.tsx\n│   │\n│   ├── 📂 layout/                        # Layout components\n│   │   ├── Header.tsx\n│   │   ├── Sidebar.tsx\n│   │   └── Footer.tsx\n│   │\n│   └── 📂 common/                        # Componentes comuns\n│       ├── LoadingSpinner.tsx\n│       ├── ErrorBoundary.tsx\n│       └── Toast.tsx\n│\n├── 📂 lib/                                # Utilitários e clientes\n│   ├── 📄 api-client.ts                  # HTTP client com retry logic\n│   ├── 📄 nation-client.ts               # Wrapper Nation API (backend)\n│   ├── 📄 auth.ts                        # Auth utilities\n│   ├── 📄 db.ts                          # Database client (se aplicável)\n│   ├── 📄 validators.ts                  # Input validation schemas\n│   ├── 📄 errors.ts                      # Custom error classes\n│   ├── 📄 logger.ts                      # Structured logging\n│   ├── 📄 rate-limiter.ts               # Rate limiting implementation\n│   └── 📄 cache.ts                       # Cache utilities\n│\n├── 📂 hooks/                              # Custom React Hooks\n│   ├── 📄 useChat.ts                     # Chat logic hook\n│   ├── 📄 useAuth.ts                     # Auth state hook\n│   ├── 📄 useFetch.ts                    # Data fetching hook\n│   └── 📄 useLocalStorage.ts             # LocalStorage with sync\n│\n├── 📂 stores/                             # State Management (Zustand)\n│   ├── 📄 chatStore.ts                   # Chat state\n│   ├── 📄 authStore.ts                   # Auth state\n│   └── 📄 uiStore.ts                     # UI state\n│\n├── 📂 types/                              # TypeScript type definitions\n│   ├── 📄 index.ts                       # Re-exports comuns\n│   ├── 📄 api.ts                         # API types\n│   ├── 📄 chat.ts                        # Chat domain types\n│   ├── 📄 user.ts                        # User types\n│   └── 📄 errors.ts                      # Error types\n│\n├── 📂 middleware/                         # Next.js middleware\n│   ├── 📄 auth.ts                        # Auth middleware\n│   ├── 📄 rateLimit.ts                   # Rate limit middleware\n│   └── 📄 logging.ts                     # Logging middleware\n│\n├── 📂 utils/                              # Utility functions\n│   ├── 📄 strings.ts                     # String helpers\n│   ├── 📄 dates.ts                       # Date helpers\n│   ├── 📄 formatting.ts                  # Format utilities\n│   └── 📄 arrays.ts                      # Array helpers\n│\n├── 📂 public/                             # Static assets\n│   ├── 📂 images/\n│   ├── 📂 icons/\n│   └── 📂 fonts/\n│\n├── 📂 __tests__/                          # Tests\n│   ├── 📂 api/\n│   │   └── 📄 chat.test.ts\n│   ├── 📂 components/\n│   │   └── 📄 ChatWindow.test.tsx\n│   ├── 📂 hooks/\n│   │   └── 📄 useChat.test.ts\n│   └── 📂 lib/\n│       └── 📄 validators.test.ts\n│\n├── 📂 features/                           # BDD Feature files\n│   ├── 📄 chat-messaging.feature\n│   ├── 📄 authentication.feature\n│   └── 📄 api-security.feature\n│\n├── 📂 .github/                            # GitHub Actions & config\n│   ├── 📂 workflows/\n│   │   ├── 📄 deploy.yml                # Deploy to Vercel\n│   │   ├── 📄 test.yml                  # Run tests\n│   │   ├── 📄 lint.yml                  # Linting\n│   │   └── 📄 security.yml              # Security checks\n│   └── 📂 ISSUE_TEMPLATE/\n│\n├── 📄 .env.example                        # Environment variables template\n├── 📄 .env.local                          # Local env (NÃO commitar!)\n├── 📄 .gitignore                          # Git ignore rules\n├── 📄 .eslintrc.json                      # ESLint config\n├── 📄 .prettierrc                         # Prettier config\n├── 📄 tsconfig.json                       # TypeScript config\n├── 📄 next.config.js                      # Next.js config\n├── 📄 vercel.json                         # Vercel deployment config\n├── 📄 jest.config.js                      # Jest test config\n├── 📄 package.json                        # Dependencies\n├── 📄 package-lock.json                   # Dependency lock\n│\n├── 📄 README.md                           # Project documentation\n├── 📄 CONTRIBUTING.md                     # Contribution guidelines\n├── 📄 ARCHITECTURE.md                     # This file\n├── 📄 SECURITY.md                         # Security policies\n└── 📄 CHANGELOG.md                        # Version history\n```
+├── components/                         # React Components
+│   ├── ui/                            # Base UI components
+│   │   ├── Button.tsx
+│   │   ├── Input.tsx
+│   │   ├── Card.tsx
+│   │   └── Modal.tsx
+│   ├── chat/                          # Chat-specific
+│   │   ├── ChatWindow.tsx
+│   │   ├── MessageList.tsx
+│   │   ├── InputArea.tsx
+│   │   └── MessageBubble.tsx
+│   ├── layout/
+│   │   ├── Header.tsx
+│   │   ├── Sidebar.tsx
+│   │   └── Footer.tsx
+│   └── common/
+│       ├── LoadingSpinner.tsx
+│       └── ErrorBoundary.tsx
+│
+├── hooks/                              # Custom React Hooks
+│   ├── useChat.ts                     # Chat logic & state
+│   ├── useAuth.ts                     # Auth logic
+│   └── useFetch.ts                    # Data fetching wrapper
+│
+├── stores/                             # Zustand State Management
+│   ├── chatStore.ts                   # Messages, loading, error
+│   ├── authStore.ts                   # User session
+│   └── uiStore.ts                     # UI state
+│
+├── lib/                                # Utilities & Clients
+│   ├── api-client.ts                  # HTTP client com retry
+│   ├── nation-client.ts               # Nation API wrapper
+│   ├── validators.ts                  # Zod schemas
+│   ├── rate-limiter.ts               # Rate limiting logic
+│   ├── logger.ts                      # Structured logging
+│   └── cache.ts                       # Cache utilities
+│
+├── types/                              # TypeScript Types
+│   ├── api.ts                         # API types
+│   ├── chat.ts                        # Chat domain types
+│   ├── user.ts                        # User types
+│   └── errors.ts                      # Error types
+│
+├── middleware/                         # Next.js Middleware
+│   ├── auth.ts
+│   ├── rateLimit.ts
+│   └── logging.ts
+│
+├── __tests__/                          # Jest Tests
+│   ├── api/
+│   │   └── chat.test.ts
+│   ├── components/
+│   │   └── ChatWindow.test.tsx
+│   ├── hooks/
+│   │   └── useChat.test.ts
+│   └── lib/
+│       └── validators.test.ts
+│
+├── features/                           # BDD Feature Files
+│   ├── chat-messaging.feature
+│   ├── api-security.feature
+│   └── steps/
+│       └── chat_steps.py
+│
+├── .github/                            # GitHub Config
+│   ├── workflows/
+│   │   ├── deploy.yml                 # Vercel deployment
+│   │   ├── test.yml                   # Run tests
+│   │   ├── lint.yml                   # Linting
+│   │   └── security.yml               # Security checks
+│   └── ISSUE_TEMPLATE/
+│
+├── public/                             # Static Assets
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+│
+├── docs/                               # 📚 Documentation
+│   ├── ARQUITETURA_COMPLETA.md        # This file
+│   ├── GUIA_IMPLEMENTACAO.md
+│   ├── SECURITY.md
+│   └── README.md
+│
+├── .env.example
+├── .env.local                          # ⚠️ NEVER commit
+├── .gitignore
+├── .eslintrc.json
+├── .prettierrc
+├── tsconfig.json
+├── next.config.js
+├── vercel.json
+├── jest.config.js
+├── package.json
+└── README.md
+```
 
 ---
 
-## ⚙️ Componentes Principais
+## 🔐 Segurança
 
-### 1. **Frontend Application (`/app`)**
+### Token Protection (Critical)
 
-```typescript
-// app/layout.tsx - Root layout com providers
-import { ReactNode } from 'react';\nimport { Providers } from '@/components/providers';\n\nexport default function RootLayout({ children }: { children: ReactNode }) {\n  return (\n    <html lang=\"pt-BR\">\n      <head>\n        <meta charset=\"UTF-8\" />\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n      </head>\n      <body>\n        <Providers>\n          {children}\n        </Providers>\n      </body>\n    </html>\n  );\n}\n```\n\n### 2. **API Gateway (`/api/chat`)**\n\n```typescript\n// app/api/chat/route.ts - Main endpoint seguro\nimport { NextRequest, NextResponse } from 'next/server';\nimport { validateRequest } from '@/lib/validators';\nimport { checkRateLimit } from '@/lib/rate-limiter';\nimport { callNationAPI } from '@/lib/nation-client';\nimport { auditLog } from '@/lib/logger';\n\nexport async function POST(req: NextRequest) {\n  try {\n    const clientIp = req.headers.get('x-forwarded-for') || 'unknown';\n    \n    // 1. Validação\n    const validation = validateRequest(req);\n    if (!validation.valid) {\n      return NextResponse.json({ error: validation.error }, { status: 400 });\n    }\n    \n    // 2. Rate limiting\n    if (!checkRateLimit(clientIp)) {\n      auditLog(clientIp, 'RATE_LIMIT_EXCEEDED');\n      return NextResponse.json(\n        { error: 'Too many requests' },\n        { status: 429, headers: { 'Retry-After': '60' } }\n      );\n    }\n    \n    // 3. Parsear body\n    const { message } = await req.json();\n    if (!message || typeof message !== 'string') {\n      return NextResponse.json({ error: 'Invalid message' }, { status: 400 });\n    }\n    \n    // 4. Chamar Nation API (token protegido)\n    const result = await callNationAPI(message);\n    if (!result.success) {\n      auditLog(clientIp, 'CHAT_FAILED', { error: result.error });\n      return NextResponse.json({ error: result.error }, { status: 500 });\n    }\n    \n    // 5. Retornar resposta (sem token)\n    auditLog(clientIp, 'CHAT_SUCCESS');\n    return NextResponse.json({ success: true, data: result.data });\n    \n  } catch (error) {\n    console.error('API error:', error);\n    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });\n  }\n}\n```\n\n### 3. **State Management (`/stores`)**\n\n```typescript\n// stores/chatStore.ts - Zustand store\nimport { create } from 'zustand';\n\ninterface Message {\n  id: string;\n  content: string;\n  role: 'user' | 'assistant';\n  timestamp: Date;\n}\n\ninterface ChatStore {\n  messages: Message[];\n  loading: boolean;\n  error: string | null;\n  addMessage: (message: Message) => void;\n  clearMessages: () => void;\n  setLoading: (loading: boolean) => void;\n  setError: (error: string | null) => void;\n}\n\nexport const useChatStore = create<ChatStore>((set) => ({\n  messages: [],\n  loading: false,\n  error: null,\n  addMessage: (message) =>\n    set((state) => ({ messages: [...state.messages, message] })),\n  clearMessages: () => set({ messages: [] }),\n  setLoading: (loading) => set({ loading }),\n  setError: (error) => set({ error }),\n}));\n```\n\n### 4. **Custom Hooks (`/hooks`)**\n\n```typescript\n// hooks/useChat.ts - Chat logic\nimport { useState, useCallback } from 'react';\nimport { useChatStore } from '@/stores/chatStore';\nimport { sendMessage as apiSendMessage } from '@/lib/api-client';\n\nexport function useChat() {\n  const { messages, addMessage, setLoading, setError } = useChatStore();\n  const [input, setInput] = useState('');\n  \n  const sendMessage = useCallback(async (content: string) => {\n    setLoading(true);\n    try {\n      const response = await apiSendMessage(content);\n      addMessage({\n        id: Date.now().toString(),\n        content,\n        role: 'user',\n        timestamp: new Date(),\n      });\n      addMessage({\n        id: (Date.now() + 1).toString(),\n        content: response.data,\n        role: 'assistant',\n        timestamp: new Date(),\n      });\n      setInput('');\n    } catch (error) {\n      setError(error instanceof Error ? error.message : 'Unknown error');\n    } finally {\n      setLoading(false);\n    }\n  }, []);\n  \n  return { messages, sendMessage, input, setInput };\n}\n```\n\n### 5. **API Client (`/lib/api-client.ts`)**\n\n```typescript\n// lib/api-client.ts - HTTP client com retry\nimport { exponentialBackoff, maxRetries } from '@/lib/utils';\n\nexport async function sendMessage(message: string) {\n  let lastError: Error | null = null;\n  \n  for (let attempt = 0; attempt < maxRetries; attempt++) {\n    try {\n      const response = await fetch('/api/chat', {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ message }),\n      });\n      \n      if (!response.ok) {\n        throw new Error(`HTTP ${response.status}`);\n      }\n      \n      return await response.json();\n      \n    } catch (error) {\n      lastError = error as Error;\n      if (attempt < maxRetries - 1) {\n        await exponentialBackoff(attempt);\n      }\n    }\n  }\n  \n  throw lastError || new Error('Max retries exceeded');\n}\n```\n\n---\n\n## 🔄 Fluxo de Dados\n\n### Fluxo de Chat (End-to-End)\n\n```\n┌─────────────────────┐\n│   User Types Chat   │\n│   \"Olá, mundo!\"     │\n└──────────┬──────────┘\n           │\n           ▼\n┌─────────────────────────────────────────────────────┐\n│ React Component (ChatWindow.tsx)                    │\n│ • Captura input de usuário                         │\n│ • Valida comprimento (max 5000 chars)              │\n│ • Emite evento de send                             │\n└──────────┬──────────────────────────────────────────┘\n           │\n           ▼\n┌─────────────────────────────────────────────────────┐\n│ useChat Hook                                        │\n│ • Atualiza UI (adds user message to store)         │\n│ • Chama API via /api/chat                          │\n│ • Inicia loading state                             │\n└──────────┬──────────────────────────────────────────┘\n           │ POST /api/chat\n           │ { message: \"Olá, mundo!\" }\n           │ (SEM token)\n           ▼\n┌─────────────────────────────────────────────────────┐\n│ API Route: /api/chat (Vercel Function)             │\n│ 1. Validar request (headers, body size)            │\n│ 2. Check rate limit (10 req/min by IP)             │\n│ 3. Sanitizar input                                 │\n│ 4. Log auditoria (timestamp, IP, message length)   │\n│ 5. Chamar Nation API com token protegido           │\n└──────────┬──────────────────────────────────────────┘\n           │ POST https://api.nation.fun/v1/chat\n           │ Authorization: Bearer NATION_TOKEN\n           │ { message: \"Olá, mundo!\" }\n           │ (SEM exposição ao client)\n           ▼\n┌─────────────────────────────────────────────────────┐\n│ Nation API                                          │\n│ • Processa mensagem                                │\n│ • Busca context                                    │\n│ • Gera resposta                                    │\n│ • Retorna resposta JSON                            │\n└──────────┬──────────────────────────────────────────┘\n           │ { response: \"Olá! Como posso ajudar?\" }\n           ▼\n┌─────────────────────────────────────────────────────┐\n│ API Route: /api/chat (Processa resposta)           │\n│ • Filtra dados sensíveis (se houver)               │\n│ • Formata resposta                                 │\n│ • Log success                                      │\n│ • Retorna apenas dados de negócio (sem token)      │\n└──────────┬──────────────────────────────────────────┘\n           │ 200 OK\n           │ { success: true,\n           │   data: \"Olá! Como posso ajudar?\" }\n           ▼\n┌─────────────────────────────────────────────────────┐\n│ useChat Hook (recebe resposta)                     │\n│ • Extrai dados                                     │\n│ • Cria message object                              │\n│ • Adiciona ao store                                │\n│ • Atualiza loading state (false)                   │\n└──────────┬──────────────────────────────────────────┘\n           │\n           ▼\n┌─────────────────────────────────────────────────────┐\n│ React Re-render (subscription ao store)            │\n│ • MessageList renderiza nova mensagem do assistant │\n│ • UI atualiza em real-time                        │\n│ • Scroll para última mensagem                      │\n└──────────┬──────────────────────────────────────────┘\n           │\n           ▼\n┌─────────────────────┐\n│ User Sees Response  │\n│ \"Olá! Como...\"      │\n└─────────────────────┘\n```\n\n---\n\n## 🎨 Decisões Arquitetônicas\n\n### 1. **Por que Next.js 14+?**\n\n✅ **App Router moderno** - File-based routing com server/client components  \n✅ **API Routes serverless** - Backend sem infraestrutura extra  \n✅ **TypeScript nativo** - Type safety por padrão  \n✅ **Suporte React 18+** - Concurrent rendering, suspense, streaming  \n✅ **Deployment Vercel** - Zero-config, auto-scaling, preview deployments  \n\n### 2. **Por que Zustand para State Management?**\n\n✅ **Minimalista** - ~2KB, sem boilerplate  \n✅ **Reatividade automática** - Não precisa de selectors complexos  \n✅ **Middleware support** - Logging, persistence, devtools  \n✅ **TypeScript first** - Tipos inferenciais automáticos  \n\n### 3. **Por que Backend Gateway (/api/chat)?**\n\n✅ **Segurança de token** - Credenciais nunca expostas ao client  \n✅ **Rate limiting centralizado** - Proteção contra abuso  \n✅ **Audit trail** - Rastrear todas as operações  \n✅ **Validação server-side** - Não confiar em dados do client  \n✅ **Escalabilidade** - Serverless functions escalam automaticamente  \n\n### 4. **Por que Vercel?**\n\n✅ **Next.js optimizado** - Deploy nativo, zero-config  \n✅ **Serverless automático** - Escala de 0 a 1000 req/s  \n✅ **Environment variables seguras** - Não expostas ao client  \n✅ **GitHub integration** - Deploy automático via push  \n✅ **Preview deployments** - Testar PRs antes de merge  \n✅ **Observability built-in** - Logs, metrics, traces  \n\n---\n\n## 🛠️ Stack Tecnológico\n\n```json\n{\n  \"runtime\": {\n    \"node\": \"18.17.0+\",\n    \"npm\": \"9.0.0+\"\n  },\n  \"frontend\": {\n    \"framework\": \"Next.js 14.0+\",\n    \"ui_library\": \"React 18.0+\",\n    \"styling\": \"Tailwind CSS 3.0+\",\n    \"state_management\": \"Zustand 4.0+\",\n    \"data_fetching\": \"TanStack Query 5.0+\",\n    \"form_handling\": \"React Hook Form 7.0+\",\n    \"validation\": \"Zod 3.0+\"\n  },\n  \"backend\": {\n    \"runtime\": \"Node.js (Vercel Functions)\",\n    \"api_framework\": \"Next.js API Routes\",\n    \"rate_limiting\": \"custom-implementation\",\n    \"logging\": \"structured-logging (winston/pino)\",\n    \"cache\": \"memory-cache / redis\"\n  },\n  \"testing\": {\n    \"unit_testing\": \"Jest 29.0+\",\n    \"component_testing\": \"React Testing Library\",\n    \"e2e_testing\": \"Playwright / Cypress\",\n    \"bdd\": \"Behave / Cucumber\"\n  },\n  \"tooling\": {\n    \"code_linting\": \"ESLint 8.0+\",\n    \"code_formatting\": \"Prettier 3.0+\",\n    \"type_checking\": \"TypeScript 5.0+\",\n    \"version_control\": \"Git\",\n    \"ci_cd\": \"GitHub Actions\",\n    \"deployment\": \"Vercel\"\n  },\n  \"observability\": {\n    \"error_tracking\": \"Sentry\",\n    \"metrics\": \"Prometheus / Datadog\",\n    \"logging\": \"ELK Stack / Datadog\",\n    \"tracing\": \"OpenTelemetry (optional)\"\n  }\n}\n```\n\n---\n\n## 🔐 Segurança & Compliance\n\n### Matriz de Ameaças & Mitigações\n\n| Ameaça | Risco | Mitigação | Status |\n|--------|-------|-----------|--------|\n| **Token Exposure** | CRÍTICO | Gateway `/api/chat` com token em env var | ✅ |\n| **MITM Attack** | ALTO | HTTPS em todas as conexões | ✅ |\n| **Rate Limiting** | ALTO | Token bucket (10 req/min por IP) | ✅ |\n| **XSS Attack** | ALTO | Input sanitization + CSP headers | ✅ |\n| **SQL Injection** | N/A | Não aplicável (stateless API) | ✅ |\n| **CSRF Attack** | MÉDIO | SameSite cookies + origin validation | ✅ |\n| **DDoS Attack** | MÉDIO | Vercel DDoS protection + rate limiting | ✅ |\n| **Data Breach** | CRÍTICO | Audit logging + encryption at rest | ✅ |\n\n### Security Headers Implementados\n\n```typescript\n// next.config.js\nconst securityHeaders = [\n  {\n    key: 'X-Content-Type-Options',\n    value: 'nosniff',\n  },\n  {\n    key: 'X-Frame-Options',\n    value: 'DENY',\n  },\n  {\n    key: 'X-XSS-Protection',\n    value: '1; mode=block',\n  },\n  {\n    key: 'Referrer-Policy',\n    value: 'strict-origin-when-cross-origin',\n  },\n  {\n    key: 'Permissions-Policy',\n    value: 'camera=(), microphone=(), geolocation=()',\n  },\n  {\n    key: 'Content-Security-Policy',\n    value: \"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'\",\n  },\n];\n```\n\n### OWASP Top 10 Compliance\n\n```\n✅ A01:2021 - Broken Access Control\n   → JWT validation, rate limiting, audit logging\n\n✅ A02:2021 - Cryptographic Failures\n   → HTTPS only, secure token storage, HTTPS headers\n\n✅ A03:2021 - Injection\n   → Input validation, parameterized queries (N/A), output encoding\n\n✅ A04:2021 - Insecure Design\n   → Threat modeling, secure by default architecture\n\n✅ A05:2021 - Security Misconfiguration\n   → Security headers, no debug mode in prod, env var management\n\n✅ A06:2021 - Vulnerable Components\n   → Dependency scanning (npm audit), lock files, automated updates\n\n✅ A07:2021 - Authentication Failures\n   → Strong session management, password policies (N/A)\n\n✅ A08:2021 - Software/Data Integrity Failures\n   → Signed commits, secure dependencies, integrity checks\n\n✅ A09:2021 - Logging & Monitoring\n   → Comprehensive audit logging, error tracking, metrics collection\n\n✅ A10:2021 - SSRF\n   → URL validation, whitelist external APIs, no server-side includes\n```\n\n---\n\n## ⚡ Performance & Otimizações\n\n### Web Vitals Targets\n\n```\n📊 Core Web Vitals\n├─ LCP (Largest Contentful Paint): < 2.5s\n├─ FID (First Input Delay): < 100ms\n├─ CLS (Cumulative Layout Shift): < 0.1\n└─ TTFB (Time to First Byte): < 600ms\n\n📈 Performance Budget\n├─ JavaScript (initial): < 100KB gzipped\n├─ CSS (initial): < 50KB gzipped\n├─ Images: < 1MB total (lazy-loaded)\n└─ Fonts: < 100KB total (system fonts preferred)\n```\n\n### Otimizações Implementadas\n\n```typescript\n// 1. Code Splitting\nimport dynamic from 'next/dynamic';\nconst ChatWindow = dynamic(() => import('@/components/ChatWindow'), {\n  loading: () => <div>Loading...</div>,\n});\n\n// 2. Image Optimization\nimport Image from 'next/image';\n<Image\n  src=\"/avatar.png\"\n  alt=\"Avatar\"\n  width={40}\n  height={40}\n  priority={false}\n  quality={75}\n/>\n\n// 3. Server Components (by default in App Router)\n// Only client components marked with 'use client'\nexport default async function ChatPage() {\n  const initialMessages = await fetchMessages(); // Server-side\n  return <ChatWindow initialMessages={initialMessages} />;\n}\n\n// 4. Cache Strategy\n// Static generation for pages (unless dynamic)\n// Incremental Static Regeneration (ISR)\n// On-demand ISR with revalidation\n\n// 5. Database Query Optimization\n// Connection pooling\n// Query result caching\n// N+1 query prevention\n```\n\n---\n\n## 🚀 DevOps & CI/CD\n\n### GitHub Actions Workflows\n\n```yaml\n# .github/workflows/deploy.yml\nname: Deploy to Vercel\non:\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - uses: actions/setup-node@v3\n        with:\n          node-version: '18'\n      - run: npm install\n      - run: npm run lint\n      - run: npm run test\n      - run: npm run build\n      - uses: amondnet/vercel-action@v25\n        with:\n          vercel-token: ${{ secrets.VERCEL_TOKEN }}\n```\n\n### Environment Variables\n\n```bash\n# .env.example\nNATION_API_URL=https://api.nation.fun\nNATION_TOKEN=your_token_here  # Only in Vercel env vars\nNEXT_PUBLIC_API_URL=https://yourdomain.vercel.app\nNODE_ENV=production\nLOG_LEVEL=info\n```\n\n---\n\n## 🧪 Testes & Qualidade\n\n### Teste Pyramid\n\n```\n           /\\\n          /  \\\n         / E2E \\\n        /________\\\n       /\\        /\\\n      /  \\ Inte /  \\\n     / Int / gr /    \\\n    /____/____/____ \\\n   /\\              /\\\n  /  \\    Unit   /  \\\n / Unit \\______ /    \\\n/________________\\\n\nTarget Coverage:\n├─ Unit tests: 80%\n├─ Integration: 50%\n├─ E2E: Key user flows\n└─ Total: 75%+\n```\n\n### Jest Configuration\n\n```typescript\n// jest.config.js\nmodule.exports = {\n  preset: 'ts-jest',\n  testEnvironment: 'jsdom',\n  roots: ['<rootDir>'],\n  testMatch: ['**/__tests__/**/*.test.ts', '**/__tests__/**/*.test.tsx'],\n  moduleNameMapper: {\n    '^@/(.*)$': '<rootDir>/$1',\n  },\n  collectCoverageFrom: [\n    'app/**/*.ts',\n    'lib/**/*.ts',\n    'hooks/**/*.ts',\n    '!**/*.d.ts',\n    '!**/node_modules/**',\n  ],\n};\n```\n\n### BDD Feature Files\n\n```gherkin\n# features/chat-security.feature\nFeature: Chat with Security\n  Scenario: User sends message securely\n    Given user is on chat page\n    When user types message\n    And clicks send button\n    Then message is sent to /api/chat\n    And response is displayed\n    And token is never exposed in browser\n```\n\n---\n\n## 📡 Documentação API\n\n### Endpoint: POST /api/chat\n\n**Request:**\n```typescript\ninterface ChatRequest {\n  message: string; // Required, max 5000 chars\n}\n```\n\n**Response (200 OK):**\n```typescript\ninterface ChatResponse {\n  success: true;\n  data: {\n    id: string;\n    content: string;\n    timestamp: string;\n  };\n}\n```\n\n**Response (400 Bad Request):**\n```typescript\ninterface ErrorResponse {\n  error: string; // \"Invalid message\" | \"Message too long\" | etc.\n}\n```\n\n**Response (429 Too Many Requests):**\n```typescript\ninterface RateLimitResponse {\n  error: string;\n  retryAfter: number; // seconds\n}\n```\n\n**cURL Example:**\n```bash\ncurl -X POST https://yourdomain.vercel.app/api/chat \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"message\": \"Olá, como você está?\"}'\n```\n\n---\n\n## 📊 Métricas & Monitoramento\n\n### KPIs Monitorados\n\n```typescript\ninterface MetricsCollected {\n  // Performance\n  apiLatency: number; // ms\n  requestsPerSecond: number;\n  errorRate: number; // %\n  \n  // Business\n  messagesPerUser: number;\n  activeUsers: number;\n  conversionRate: number; // %\n  \n  // Technical\n  serverUptime: number; // %\n  deploymentFrequency: number; // per week\n  meanTimeToRecovery: number; // hours\n}\n```\n\n### Observability Stack\n\n```\n┌─────────────────┐\n│ Application     │\n│ (structured logs)│\n└────────┬────────┘\n         │\n         ▼\n┌─────────────────┐       ┌──────────────────┐\n│ Sentry          │───→   │ Error Tracking   │\n│ (error tracking)│       │ & Alerting       │\n└─────────────────┘       └──────────────────┘\n         ▲\n         │\n┌────────┴────────────────┬─────────────────────┐\n│                         │                     │\n▼                         ▼                     ▼\nPrometheus         Datadog Logs         Grafana Dashboards\n(metrics)          (centralized)        (visualization)\n```\n\n---\n\n## 🎯 Roadmap Futuro\n\n### Phase 1 (Current - Q4 2025)\n- ✅ Chat endpoint seguro\n- ✅ Frontend app\n- ✅ Rate limiting básico\n- ✅ Audit logging\n\n### Phase 2 (Q1 2026)\n- 📋 User authentication (NextAuth.js)\n- 📋 Conversation persistence (DB)\n- 📋 Advanced rate limiting (Redis)\n- 📋 Observability avançada (Datadog)\n\n### Phase 3 (Q2 2026)\n- 📋 Analytics dashboard\n- 📋 Admin panel\n- 📋 API versioning\n- 📋 Webhooks\n\n### Phase 4 (Q3 2026)\n- 📋 Multi-language support\n- 📋 Custom models\n- 📋 Batch processing\n- 📋 Export features\n\n---\n\n## 🤝 Contribuindo\n\nVer `CONTRIBUTING.md` para diretrizes de desenvolvimento.\n\n## 📄 Licença\n\nMIT License - veja LICENSE.md\n\n---\n\n**Última atualização:** 29 de novembro de 2025  \n**Responsável:** Engineering Team  \n**Status:** Production Ready ✅\n
+**❌ ANTES (Inseguro - GitHub Pages):**
+```
+Frontend (React) → [Token exposto no Network Inspector] → Nation API
+Risco: Token visível em F12 → Network → Headers
+```
+
+**✅ DEPOIS (Seguro - Vercel + Backend Gateway):**
+```
+Frontend (React - SEM token) → /api/chat endpoint
+                                ↓
+                        Vercel Serverless Function
+                        (Token em process.env)
+                                ↓
+                        Nation API (Backend-to-Backend, HTTPS)
+Resultado: Token NUNCA é exposto ao navegador
+```
+
+### OWASP Top 10 Compliance
+
+| # | Ameaça | Mitigação | Status |
+|---|--------|-----------|--------|
+| A01 | Broken Access Control | JWT validation, rate limiting, audit logging | ✅ |
+| A02 | Cryptographic Failures | HTTPS only, secure token storage | ✅ |
+| A03 | Injection | Input validation, parameterized queries | ✅ |
+| A04 | Insecure Design | Threat modeling, secure by default | ✅ |
+| A05 | Security Misconfiguration | Security headers, no debug in prod | ✅ |
+| A06 | Vulnerable Components | npm audit, lock files, updates | ✅ |
+| A07 | Authentication Failures | Strong session management | ✅ |
+| A08 | Data Integrity | Signed commits, integrity checks | ✅ |
+| A09 | Logging & Monitoring | Audit logging, error tracking | ✅ |
+| A10 | SSRF | URL validation, whitelist APIs | ✅ |
+
+---
+
+## ⚡ Performance & Otimizações
+
+### Web Vitals Targets
+
+```
+Core Web Vitals:
+├─ LCP (Largest Contentful Paint): < 2.5s
+├─ FID (First Input Delay): < 100ms
+├─ CLS (Cumulative Layout Shift): < 0.1
+└─ TTFB (Time to First Byte): < 600ms
+
+Performance Budget:
+├─ JavaScript (initial): < 100KB gzipped
+├─ CSS (initial): < 50KB gzipped
+├─ Images: < 1MB total (lazy-loaded)
+└─ Fonts: < 100KB total
+```
+
+### Otimizações Implementadas
+
+- Code splitting com dynamic imports
+- Image optimization (next/image)
+- Server Components (by default)
+- Static generation + ISR
+- Database query optimization
+- Cache strategy multi-layer
+
+---
+
+## 🧪 Testes & Qualidade
+
+### Teste Pyramid
+
+```
+              /\
+             /  \       E2E Tests
+            /____\     (Key flows)
+           /\    /\
+          /  \  /  \   Integration Tests
+         / Int\ /    \  (API behavior)
+        /____\/____\
+       /\          /\
+      /  \  Unit  /  \ Unit Tests
+     / Unit \____/    \ (Functions, hooks)
+    /________________\
+
+Target Coverage: >= 80% overall
+```
+
+### Jest + BDD
+
+```bash
+npm run test           # Jest unit tests
+npm run test:coverage  # Coverage report
+npm run test:bdd       # Behave scenarios
+```
+
+---
+
+## 🚀 DevOps & CI/CD
+
+### GitHub Actions Pipeline
+
+```yaml
+On Push to main:
+├─ Lint (ESLint)
+├─ Type Check (TypeScript)
+├─ Test (Jest)
+├─ Build (Next.js)
+└─ Deploy (Vercel)
+
+On Pull Request:
+├─ Same as above
+└─ Preview Deploy (Vercel)
+```
+
+### Vercel Environment Variables
+
+```
+NATION_TOKEN              # Protected - Backend only
+SENTRY_DSN               # Error tracking
+LOG_LEVEL                # Logging verbosity
+NEXT_PUBLIC_API_URL      # Frontend-accessible
+```
+
+---
+
+## 📊 Monitoramento & Observabilidade
+
+### Métricas Coletadas
+
+```
+Performance:
+├─ API Latency (p50, p95, p99)
+├─ Request Rate (req/sec)
+└─ Error Rate (%)
+
+Business:
+├─ Active Users
+├─ Messages/User
+└─ Conversion Rate
+
+Technical:
+├─ Server Uptime
+├─ CPU/Memory Usage
+└─ Database Connections
+```
+
+### Stack de Observabilidade
+
+- **Sentry:** Error tracking & alerting
+- **Datadog:** Metrics & APM
+- **ELK:** Centralized logging
+- **Grafana:** Dashboards & visualization
+
+---
+
+## 🎯 Roadmap Futuro
+
+### Phase 1 (Atual - Q4 2025)
+- ✅ Chat endpoint seguro
+- ✅ Frontend app
+- ✅ Rate limiting
+- ✅ Audit logging
+
+### Phase 2 (Q1 2026)
+- 📋 User authentication (NextAuth.js)
+- 📋 Conversation persistence (PostgreSQL)
+- 📋 Advanced rate limiting (Redis)
+- 📋 Observability avançada (Datadog)
+
+### Phase 3 (Q2 2026)
+- 📋 Analytics dashboard
+- 📋 Admin panel
+- 📋 API versioning
+- 📋 Webhooks
+
+---
+
+## 📞 Próximos Passos
+
+1. **Revisar** este documento
+2. **Seguir** o GUIA_IMPLEMENTACAO.md
+3. **Implementar** em ~4 dias
+4. **Deploy** em Vercel
+5. **Monitor** com Sentry + Datadog
+
+---
+
+**Versão:** 2.0 Production-Ready  
+**Data:** 29 de novembro de 2025  
+**Status:** ✅ Pronto para Implementação
