@@ -24,10 +24,10 @@ export async function loadLocalAgentDefinitions(): Promise<AgentFile[]> {
         const filePath = path.join(agentsDir, file);
         try {
           // Dynamically import the TypeScript module
-          const module = await import(filePath);
+          const agentModule = await import(filePath);
 
           // Find the exported agent definition object in the module
-          const agentDefinition = Object.values(module).find(
+          const agentDefinition = Object.values(agentModule).find(
             (exported: any) => typeof exported === 'object' && exported.id && exported.version
           ) as AgentDefinition | undefined;
 
