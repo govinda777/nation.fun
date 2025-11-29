@@ -113,7 +113,7 @@ export default function Hotsite() {
           <div className="container">
             <h2 style={{ fontSize: '36px', marginBottom: '40px' }}>O que nossos clientes dizem</h2>
             <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-              <p style={{ fontStyle: 'italic' }}>"O Nation.fun transformou nosso atendimento. Configuramos tudo em uma tarde e os resultados foram imediatos."</p>
+              <p style={{ fontStyle: 'italic' }}>&quot;O Nation.fun transformou nosso atendimento. Configuramos tudo em uma tarde e os resultados foram imediatos.&quot;</p>
               <p><strong>- João Silva, CEO de uma pequena empresa</strong></p>
             </div>
           </div>
