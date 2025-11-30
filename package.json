@@ -15,7 +15,8 @@
     "generate-report": "node generate-report.js",
     "agents:sync": "tsx scripts/sync-agents.ts",
     "knip": "knip",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
