@@ -1,8 +1,11 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
-import { getProvider, getNatoTokenContract, swapUsdcToNato } from '../services/web3';
+import { getProvider, getNatoTokenContract, swapUsdcToNato } from '@/lib/web3.js';
 import { ethers } from 'ethers';
 import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk';
+import natoTokenAbi from '@/lib/abi/NatoToken.json'; // Importando o ABI
 
 const OnRamp = () => {
   const { user } = usePrivy();
@@ -49,7 +52,7 @@ const OnRamp = () => {
       setIsSwapping(true);
       try {
         const provider = getProvider();
-        const signer = provider.getSigner();
+        const signer = await provider.getSigner(); // Ethers v6 requires await
         const usdcAmount = ethers.parseUnits(usdcBalance, 6);
         await swapUsdcToNato(signer, usdcAmount);
         fetchBalances();

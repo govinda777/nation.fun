@@ -1,6 +1,13 @@
 import Link from 'next/link';
 
-export default function AgentRow({ agent }) {
+interface Agent {
+  name: string;
+  description: string;
+  skills: string[];
+  prompt: string;
+}
+
+export default function AgentRow({ agent }: { agent: Agent }) {
   return (
     <tr>
       <td>{agent.name}</td>

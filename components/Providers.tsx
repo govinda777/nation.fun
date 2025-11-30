@@ -1,8 +1,8 @@
-import '../styles/style.css';
-import '../styles/WalletAssets.css';
+'use client';
+
 import { PrivyProvider } from '@privy-io/react-auth';
 
-function MyApp({ Component, pageProps }) {
+export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <PrivyProvider
       appId="cmhvac4m3009hl60crkjhlrql"
@@ -12,9 +12,7 @@ function MyApp({ Component, pageProps }) {
         },
       }}
     >
-      <Component {...pageProps} />
+      {children}
     </PrivyProvider>
   );
 }
-
-export default MyApp;
