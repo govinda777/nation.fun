@@ -8,7 +8,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       appId="cmhvac4m3009hl60crkjhlrql"
       config={{
         embeddedWallets: {
-          createOnLogin: 'users-without-wallets',
+          ethereum: {
+            createOnLogin: 'users-without-wallets',
+          }
         },
       }}
     >

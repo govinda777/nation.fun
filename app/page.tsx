@@ -2,9 +2,9 @@
 
 import { usePrivy } from '@privy-io/react-auth';
 import { useState } from 'react';
-import ChatWidget from '@/components/ChatWidget.tsx';
-import OnRamp from '@/components/OnRamp.tsx';
-import Header from '@/components/Header.tsx';
+import ChatWidget from '@/components/ChatWidget';
+import OnRamp from '@/components/OnRamp';
+import Header from '@/components/Header';
 
 export default function Hotsite() {
   const { login } = usePrivy();

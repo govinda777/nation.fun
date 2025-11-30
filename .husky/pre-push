@@ -1,7 +1,16 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo "Running pre-push hook: npm test..."
+echo "Running pre-push hook: type-check and tests..."
+
+# Run type check
+npm run type-check
+if [ $? -ne 0 ]; then
+  echo "TypeScript type check failed. Please fix the errors before pushing."
+  exit 1
+fi
+
+# Run tests
 npm test
 if [ $? -ne 0 ]; then
   echo "Tests must pass before pushing."

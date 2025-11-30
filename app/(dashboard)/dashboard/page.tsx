@@ -52,7 +52,7 @@ export default function DashboardPage() {
       setLoading(true);
       setError(null);
       try {
-        const provider = await wallet.getEthersProvider();
+        const provider = await wallet.getEthereumProvider();
         // O signer já vem do provider no Ethers v6
         const userAssets = await getUserAssets(provider);
         setAssets(userAssets);

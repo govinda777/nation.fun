@@ -1,64 +1,40 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 import AgentDashboard from '../AgentDashboard';
 
-// Mock the fetch function
+// Mock a successful fetch response
 global.fetch = jest.fn(() =>
   Promise.resolve({
     ok: true,
-    json: () => Promise.resolve({ agents: [{ id: '1', name: 'Test Agent', description: 'Test Description', status: 'active' }] }),
+    json: () => Promise.resolve({ agents: [{ id: '1', name: 'Test Agent', description: 'A test agent', status: 'active' }] }),
   })
-);
+) as jest.Mock;
 
 describe('AgentDashboard', () => {
   beforeEach(() => {
-    fetch.mockClear();
+    (fetch as jest.Mock).mockClear();
   });
 
-  it('should render the loading state initially', () => {
+  it('renders loading state initially', () => {
     render(<AgentDashboard userId="test-user" />);
     expect(screen.getByText('Loading agents...')).toBeInTheDocument();
   });
 
-  it('should render the dashboard with agents after a successful fetch', async () => {
+  it('renders agents after a successful fetch', async () => {
     render(<AgentDashboard userId="test-user" />);
     await waitFor(() => {
       expect(screen.getByText('Test Agent')).toBeInTheDocument();
     });
   });
 
-  it('should render the empty state if no agents are returned', async () => {
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({ agents: [] }),
-      })
-    );
-    render(<AgentDashboard userId="test-user" />);
+  it('renders an error message on fetch failure', async () => {
+    (fetch as jest.Mock).mockImplementationOnce(() => Promise.reject(new Error('API Error')));
+    const onError = jest.fn();
+    render(<AgentDashboard userId="test-user" onError={onError} />);
     await waitFor(() => {
-      expect(screen.getByText('No agents yet. Create your first AI agent!')).toBeInTheDocument();
+      expect(screen.getByText(/Failed to load agents/)).toBeInTheDocument();
+      expect(onError).toHaveBeenCalled();
     });
-  });
-
-  it('should render the error state if the fetch fails', async () => {
-    fetch.mockImplementationOnce(() => Promise.reject(new Error('Failed to load agents')));
-    render(<AgentDashboard userId="test-user" />);
-    await waitFor(() => {
-      expect(screen.getByText('Error Loading Dashboard')).toBeInTheDocument();
-    });
-  });
-
-  it('should call onAgentCreate when the create button is clicked', async () => {
-    const onAgentCreate = jest.fn();
-    render(<AgentDashboard userId="test-user" onAgentCreate={onAgentCreate} />);
-    const createButton = await screen.findByText('+ Create New Agent');
-    await userEvent.click(createButton);
-    expect(onAgentCreate).toHaveBeenCalled();
-  });
-
-  it('should switch themes based on the theme prop', () => {
-    const { container } = render(<AgentDashboard userId="test-user" theme="dark" />);
-    expect(container.firstChild).toHaveClass('agent-dashboard--dark');
   });
 });

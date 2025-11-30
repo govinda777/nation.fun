@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Header from './Header.tsx';
+import Header from './Header';
 import { usePathname } from 'next/navigation';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
