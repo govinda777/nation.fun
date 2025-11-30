@@ -29,7 +29,12 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "**/*.cjs",
-    "**/*.js"
+    "**/*.js",
+    "jest.d.ts"
   ],
-  "exclude": ["node_modules", "hardhat", "src/lib/channels"]
+  "exclude": [
+    "node_modules",
+    "hardhat",
+    "src/lib/channels"
+  ]
 }
