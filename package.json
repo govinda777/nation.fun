@@ -14,10 +14,12 @@
     "test:e2e": "npm run build && start-server-and-test 'npm start' http://localhost:3000 'npm run test:bdd'",
     "generate-report": "node generate-report.js",
     "agents:sync": "tsx scripts/sync-agents.ts",
-    "knip": "knip"
+    "knip": "knip",
+    "lint": "next lint"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
       "knip"
     ]
   },
