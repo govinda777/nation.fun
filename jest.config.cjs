@@ -5,21 +5,28 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
-  preset: 'ts-jest',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.cjs'],
   testEnvironment: 'jest-environment-jsdom',
+  testPathIgnorePatterns: ['<rootDir>/hardhat/'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
   },
-  testMatch: [
-    '<rootDir>/components/**/__tests__/**/*.{js,jsx,ts,tsx}',
-    '<rootDir>/components/**/*.{spec,test}.{js,jsx,ts,tsx}',
-  ],
   collectCoverageFrom: [
+    'app/**/*.{js,jsx,ts,tsx}',
     'components/**/*.{js,jsx,ts,tsx}',
-    '!components/**/*.stories.{js,jsx,ts,tsx}',
-    '!components/**/__tests__/**',
+    'lib/**/*.{js,jsx,ts,tsx}',
+    'hooks/**/*.{js,jsx,ts,tsx}',
+    '!**/*.d.ts',
+    '!**/node_modules/**',
   ],
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 80,
+  //     functions: 80,
+  //     lines: 80,
+  //     statements: 80,
+  //   },
+  // },
 };
 
 module.exports = createJestConfig(customJestConfig);
