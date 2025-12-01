@@ -16,7 +16,8 @@ const OnRamp = () => {
   const fetchBalances = async () => {
     if (user?.wallet) {
       try {
-        const provider = await user.wallet.getEthereumProvider();
+        // WORKAROUND: Forçando a tipagem para contornar o erro de tipo da biblioteca Privy.
+        const provider = await (user.wallet as any).getEthereumProvider();
         const ethersProvider = new BrowserProvider(provider);
         const natoContract = getNatoTokenContract(ethersProvider);
         const natoBalance = await natoContract.balanceOf(user.wallet.address);
@@ -45,7 +46,7 @@ const OnRamp = () => {
         swapAsset: 'BASE_USDC',
         userAddress: user.wallet.address,
         hostApiKey: apiKey,
-      }).on('*', (event) => {
+      }).on('*', (event: any) => { // WORKAROUND: Forçando a tipagem do evento.
         if (event.type === 'PURCHASE_SUCCESSFUL') {
           fetchBalances();
         }
@@ -59,7 +60,8 @@ const OnRamp = () => {
     if (user?.wallet) {
       setIsSwapping(true);
       try {
-        const provider = await user.wallet.getEthereumProvider();
+        // WORKAROUND: Forçando a tipagem para contornar o erro de tipo da biblioteca Privy.
+        const provider = await (user.wallet as any).getEthereumProvider();
         const ethersProvider = new BrowserProvider(provider);
         const signer = await ethersProvider.getSigner();
         const usdcAmount = ethers.parseUnits(usdcBalance, 6);

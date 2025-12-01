@@ -33,7 +33,7 @@ describe('AgentDashboard', () => {
     const onError = jest.fn();
     render(<AgentDashboard userId="test-user" onError={onError} />);
     await waitFor(() => {
-      expect(screen.getByText(/Failed to load agents/)).toBeInTheDocument();
+      expect(screen.getByText(/Error Loading Dashboard/)).toBeInTheDocument();
       expect(onError).toHaveBeenCalled();
     });
   });
