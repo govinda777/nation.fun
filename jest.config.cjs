@@ -40,6 +40,9 @@ const customJestConfig = {
   transformIgnorePatterns: [
     '/node_modules/(?!(viem|@privy-io|jose)/)',
   ],
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
+  },
 };
 
 module.exports = createJestConfig(customJestConfig);
