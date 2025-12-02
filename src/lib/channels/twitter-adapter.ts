@@ -109,7 +109,7 @@ export class TwitterAdapter implements ChannelAdapter {
       console.log('🔍 Verificando mentions no Twitter...');
       
       // Mock de dados para teste
-      const mentions = { data: [] };
+      const mentions: { data: { id: string; text: string; author_id?: string; created_at?: string; }[] } = { data: [] };
       
       if (!mentions.data || mentions.data.length === 0) {
         return;
